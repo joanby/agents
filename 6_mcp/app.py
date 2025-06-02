@@ -15,6 +15,7 @@ mapper = {
     "account": Color.RED,
 }
 
+
 class Trader:
     def __init__(self, name: str, lastname: str, model_name: str):
         self.name = name
@@ -35,36 +36,42 @@ class Trader:
         df = pd.DataFrame(self.account.portfolio_value_time_series, columns=["datetime", "value"])
         df["datetime"] = pd.to_datetime(df["datetime"])
         return df
-    
+
     def get_portfolio_value_chart(self):
         df = self.get_portfolio_value_df()
         fig = px.line(df, x="datetime", y="value")
-        margin = dict(l=40, r=20, t=20, b=40) 
-        fig.update_layout(height=300, margin=margin, xaxis_title=None, yaxis_title=None, paper_bgcolor="#bbb", plot_bgcolor="#dde")
+        margin = dict(l=40, r=20, t=20, b=40)
+        fig.update_layout(
+            height=300,
+            margin=margin,
+            xaxis_title=None,
+            yaxis_title=None,
+            paper_bgcolor="#bbb",
+            plot_bgcolor="#dde",
+        )
         fig.update_xaxes(tickformat="%m/%d", tickangle=45, tickfont=dict(size=8))
         fig.update_yaxes(tickfont=dict(size=8), tickformat=",.0f")
         return fig
-        
+
     def get_holdings_df(self) -> pd.DataFrame:
         """Convert holdings to DataFrame for display"""
         holdings = self.account.get_holdings()
         if not holdings:
             return pd.DataFrame(columns=["Symbol", "Quantity"])
-        
-        df = pd.DataFrame([
-            {"Symbol": symbol, "Quantity": quantity} 
-            for symbol, quantity in holdings.items()
-        ])
+
+        df = pd.DataFrame(
+            [{"Symbol": symbol, "Quantity": quantity} for symbol, quantity in holdings.items()]
+        )
         return df
-    
+
     def get_transactions_df(self) -> pd.DataFrame:
         """Convert transactions to DataFrame for display"""
         transactions = self.account.list_transactions()
         if not transactions:
             return pd.DataFrame(columns=["Timestamp", "Symbol", "Quantity", "Price", "Rationale"])
-        
+
         return pd.DataFrame(transactions)
-    
+
     def get_portfolio_value(self) -> str:
         """Calculate total portfolio value based on current prices"""
         portfolio_value = self.account.calculate_portfolio_value() or 0.0
@@ -72,7 +79,7 @@ class Trader:
         color = "green" if pnl >= 0 else "red"
         emoji = "⬆" if pnl >= 0 else "⬇"
         return f"<div style='text-align: center;background-color:{color};'><span style='font-size:32px'>${portfolio_value:,.0f}</span><span style='font-size:24px'>&nbsp;&nbsp;&nbsp;{emoji}&nbsp;${pnl:,.0f}</span></div>"
-    
+
     def get_logs(self, previous=None) -> str:
         logs = read_log(self.name, last_n=13)
         response = ""
@@ -84,10 +91,9 @@ class Trader:
         if response != previous:
             return response
         return gr.update()
-    
-    
-class TraderView:
 
+
+class TraderView:
     def __init__(self, trader: Trader):
         self.trader = trader
         self.portfolio_value = None
@@ -101,7 +107,9 @@ class TraderView:
             with gr.Row():
                 self.portfolio_value = gr.HTML(self.trader.get_portfolio_value)
             with gr.Row():
-                self.chart = gr.Plot(self.trader.get_portfolio_value_chart, container=True, show_label=False)
+                self.chart = gr.Plot(
+                    self.trader.get_portfolio_value_chart, container=True, show_label=False
+                )
             with gr.Row(variant="panel"):
                 self.log = gr.HTML(self.trader.get_logs)
             with gr.Row():
@@ -112,7 +120,7 @@ class TraderView:
                     row_count=(5, "dynamic"),
                     col_count=2,
                     max_height=300,
-                    elem_classes=["dataframe-fix-small"]
+                    elem_classes=["dataframe-fix-small"],
                 )
             with gr.Row():
                 self.transactions_table = gr.Dataframe(
@@ -122,32 +130,60 @@ class TraderView:
                     row_count=(5, "dynamic"),
                     col_count=5,
                     max_height=300,
-                    elem_classes=["dataframe-fix"]
+                    elem_classes=["dataframe-fix"],
                 )
-            
 
         timer = gr.Timer(value=120)
-        timer.tick(fn=self.refresh, inputs=[], outputs=[self.portfolio_value, self.chart, self.holdings_table, self.transactions_table], show_progress="hidden", queue=False)
+        timer.tick(
+            fn=self.refresh,
+            inputs=[],
+            outputs=[
+                self.portfolio_value,
+                self.chart,
+                self.holdings_table,
+                self.transactions_table,
+            ],
+            show_progress="hidden",
+            queue=False,
+        )
         log_timer = gr.Timer(value=0.5)
-        log_timer.tick(fn=self.trader.get_logs, inputs=[self.log], outputs=[self.log], show_progress="hidden", queue=False)
+        log_timer.tick(
+            fn=self.trader.get_logs,
+            inputs=[self.log],
+            outputs=[self.log],
+            show_progress="hidden",
+            queue=False,
+        )
 
     def refresh(self):
         self.trader.reload()
-        return self.trader.get_portfolio_value(), self.trader.get_portfolio_value_chart(), self.trader.get_holdings_df(), self.trader.get_transactions_df()
+        return (
+            self.trader.get_portfolio_value(),
+            self.trader.get_portfolio_value_chart(),
+            self.trader.get_holdings_df(),
+            self.trader.get_transactions_df(),
+        )
+
 
 # Main UI construction
 def create_ui():
     """Create the main Gradio UI for the trading simulation"""
-    
-    traders = [Trader(trader_name, lastname, model_name) for trader_name, lastname, model_name in zip(names, lastnames, short_model_names)]    
+
+    traders = [
+        Trader(trader_name, lastname, model_name)
+        for trader_name, lastname, model_name in zip(names, lastnames, short_model_names)
+    ]
     trader_views = [TraderView(trader) for trader in traders]
-  
-    with gr.Blocks(title="Traders", css=css, js=js, theme=gr.themes.Default(primary_hue="sky"), fill_width=True) as ui:                
+
+    with gr.Blocks(
+        title="Traders", css=css, js=js, theme=gr.themes.Default(primary_hue="sky"), fill_width=True
+    ) as ui:
         with gr.Row():
             for trader_view in trader_views:
                 trader_view.make_ui()
-        
+
     return ui
+
 
 if __name__ == "__main__":
     ui = create_ui()
