@@ -1,204 +1,198 @@
-## Master AI Agentic Engineering -  build autonomous AI Agents
+## Domina la Ingeniería de IA Agente - Construye Agentes Autónomos de IA
 
-# Setup instructions for Linux
+# Instrucciones de configuración para Linux
 
-Welcome, Linux people!
+¡Bienvenidos, usuarios de Linux!
 
-Setting up a powerful environment to work at the forefront of AI is not as easy as I'd like. It can be challenging. But I really hope these instructions are bullet-proof!
+Configurar un entorno potente para trabajar en la vanguardia de la IA no es tan fácil como me gustaría. Puede ser un desafío. ¡Pero realmente espero que estas instrucciones sean a prueba de balas!
 
-If you hit problems, please don't hesitate to reach out. I am here to get you up and running quickly. There's nothing worse than feeling _stuck_. Message me, email me or LinkedIn message me and I will unstick you quickly!
+Si tienes problemas, no dudes en ponerte en contacto. ¡Estoy aquí para ayudarte a ponerte en marcha rápidamente! No hay nada peor que sentirse **atascado**. Envíame un mensaje o mándame un mensaje en LinkedIn y te ayudaré a solucionarlo rápidamente.
 
-Email: ed@edwarddonner.com  
-LinkedIn: https://www.linkedin.com/in/eddonner/  
+LinkedIn: [https://www.linkedin.com/in/juan-gabriel-gomila-salas/](https://www.linkedin.com/in/juan-gabriel-gomila-salas/)
 
-_If you're looking at this in Cursor, please right click on the filename in the Explorer on the left, and select "Open preview", to view the formatted version._
+*Si estás viendo esto en Cursor, haz clic derecho en este archivo en el Explorador y selecciona "Abrir vista previa" para ver la versión con formato.*
 
-### Before we begin
+### Antes de comenzar
 
-One "gotcha" to keep in mind: if you run anti-virus software, VPN or a Firewall, it might interfere with installations or network access. Please temporarily disable if you have problems.
+Un "problema" a tener en cuenta: si usas software antivirus, VPN o un Firewall, puede interferir con las instalaciones o el acceso a la red. Por favor, desactívalos temporalmente si tienes problemas.
 
-### Part 1: Clone the Repo
+### Parte 1: Clona el repositorio
 
-This gets you a local copy of the code on your machine.
+Esto te permitirá tener una copia local del código en tu máquina.
 
-1. **Install Git** if not already installed:
+1. **Instalar Git** si no lo tienes instalado:
 
-- Open your terminal.
-- Run `git --version`. If Git isn't installed, follow the instructions for your distribution:
-  - Debian/Ubuntu: `sudo apt update && sudo apt install git`
-  - Fedora: `sudo dnf install git`
-  - Arch: `sudo pacman -S git`
+* Abre tu terminal.
+* Ejecuta `git --version`. Si Git no está instalado, sigue las instrucciones para tu distribución:
 
-2. **Navigate to your projects folder:**
+  * Debian/Ubuntu: `sudo apt update && sudo apt install git`
+  * Fedora: `sudo dnf install git`
+  * Arch: `sudo pacman -S git`
 
-If you have a specific folder for projects, navigate to it using the `cd` command. For example:
+2. **Navega a tu carpeta de proyectos:**
+
+Si tienes una carpeta específica para proyectos, navega a ella usando el comando `cd`. Por ejemplo:
 `cd ~/projects`
 
-If you don't have a projects folder, you can create one:
+Si no tienes una carpeta de proyectos, puedes crear una:
+
 ```
 mkdir ~/projects
 cd ~/projects
 ```
 
-3. **Clone the repository:**
+3. **Clona el repositorio:**
 
-Run the following command in your terminal:
+Ejecuta el siguiente comando en tu terminal:
 `git clone https://github.com/ed-donner/agents.git`
 
-This creates a new directory `agents` within your Projects folder and downloads the course code. Use `cd agents` to enter the directory. This is your "project root directory."
+Esto crea un nuevo directorio `agents` dentro de tu carpeta de proyectos y descarga el código del curso. Usa `cd agents` para ingresar al directorio. Este es tu "directorio raíz del proyecto".
 
-### Part 2: Install Cursor
+### Parte 2: Instalar Cursor
 
-A word about Cursor: it's a cool product, but it's not to everyone's liking. It can also have a habit of being flakey with the AI recommendations. As student Alireza points out, you can use VS Code (or any IDE) in its place if you prefer. Cursor itself is built from VS Code and everything on this course will work fine in either.
+Una palabra sobre Cursor: es un producto genial, pero no a todos les gusta. También puede tener problemas con las recomendaciones de IA. Como señala el estudiante Alireza, puedes usar VS Code (o cualquier IDE) en su lugar si lo prefieres. Cursor está construido sobre VS Code y todo en este curso funcionará bien en cualquiera de los dos.
 
-1. Visit cursor at https://www.cursor.com/
-2. Click Sign In on the top right, then Sign Up, to create your account
-3. Download and follow its instructions to install and open Cursor
+1. Visita [Cursor en](https://www.cursor.com/)
+2. Haz clic en "Sign In" en la parte superior derecha, luego en "Sign Up" para crear tu cuenta.
+3. Descarga y sigue sus instrucciones para instalar y abrir Cursor.
 
-Some notes from a student (thank you Ernst!):  
-For Linux users the installation is not as straightforward, here are two resources that helped me install Cursor:  
-- https://forum.cursor.com/t/can-you-add-a-how-to-guide-on-installing-using-cursor-in-ubuntu/16646/2
--> look for the video and watch the first four minutes.
-- https://github.com/OpenShot/openshot-qt/issues/4789 -> there are many issues regarding Appimage and Fuse, and via this post I learned to install libfuse2 which helped fix the issue.  
-Note! Although I am currently on Ubuntu 22.04 and did not face any issues, there have been serious graphical issues reported with fuse on Ubuntu 24.x. Be careful and read a few blogs before you sudo apt install new libraries.
+Algunas notas de un estudiante (¡gracias Ernst!):
+Para usuarios de Linux, la instalación no es tan sencilla, aquí hay dos recursos que me ayudaron a instalar Cursor:
 
+* [https://forum.cursor.com/t/can-you-add-a-how-to-guide-on-installing-using-cursor-in-ubuntu/16646/2](https://forum.cursor.com/t/can-you-add-a-how-to-guide-on-installing-using-cursor-in-ubuntu/16646/2) -> busca el video y mira los primeros cuatro minutos.
+* [https://github.com/OpenShot/openshot-qt/issues/4789](https://github.com/OpenShot/openshot-qt/issues/4789) -> hay muchos problemas relacionados con Appimage y Fuse, y a través de este post aprendí a instalar libfuse2, lo que ayudó a solucionar el problema.
+  ¡Nota! Aunque estoy actualmente en Ubuntu 22.04 y no tuve problemas, se han reportado problemas gráficos graves con Fuse en Ubuntu 24.x. Ten cuidado y lee algunos blogs antes de ejecutar `sudo apt install` nuevas bibliotecas.
 
-After you start Cursor, you can pick the defaults for all its questions.  
-When it's time to open the project in Cursor:  
-1. Launch Cursor, if it's not already running  
-2. File menu >> New Window  
-3. Click "Open project"  
-4. Navigate into the project root directory called `agents` (probably within projects) and click Open
-5. When your project opens, you may be prompted to "install recommended extensions" for Python and Jupyter. If so, choose Yes! Otherwise:
-- Open extensions (View >> extensions)
-- Search for python, and when the results show, click on the ms-python one, and Install it if not already installed
-- Search for jupyter, and when the results show, click on the Microsoft one, and Install it if not already installed
+Después de abrir Cursor, puedes elegir las opciones predeterminadas para todas sus preguntas.
+Cuando sea hora de abrir el proyecto en Cursor:
 
-Now open the Explorer (View >> Explorer) and Cursor should show each of the weeks in the file explorer on the left.
+1. Lanza Cursor, si aún no está en ejecución.
+2. Menú de archivo >> Nueva ventana.
+3. Haz clic en "Abrir proyecto".
+4. Navega hasta el directorio raíz del proyecto llamado `agents` (probablemente dentro de proyectos) y haz clic en "Abrir".
+5. Cuando se abra tu proyecto, puede que se te pida "instalar extensiones recomendadas" para Python y Jupyter. ¡Si es así, elige "Sí"! Si no:
 
-### Part 3: The amazing `uv`
+* Abre las extensiones (Ver >> extensiones).
+* Busca "python", y cuando aparezcan los resultados, haz clic en el de ms-python y haz clic en "Instalar" si no está ya instalado.
+* Busca "jupyter", y cuando aparezcan los resultados, haz clic en el de Microsoft y haz clic en "Instalar" si no está ya instalado.
 
-For this course, I'm using uv, the blazingly fast package manager. It's really taken off in the Data Science world -- and for good reason.
+Ahora abre el Explorador (Ver >> Explorador) y Cursor debería mostrar cada una de las semanas en el explorador de archivos a la izquierda.
 
-It's fast and reliable. You're going to love it!
+### Parte 3: El increíble `uv`
 
-Follow the instructions here to install uv - I recommend using the Standalone Installer approach at the very top:
+Para este curso, estoy usando `uv`, el gestor de paquetes ultrarrápido. Ha tenido un gran éxito en el mundo de Data Science y con razón.
 
-https://docs.astral.sh/uv/getting-started/installation/
+Es rápido y confiable. ¡Te va a encantar!
 
-Then within Cursor, select View >> Terminal, to see a Terminal window within Cursor.  
-Type `pwd` to see the current directory, and check you are in the 'agents' directory. For me it is `/Users/ed/projects/agents` and it should be something similar for you.
+Sigue las instrucciones aquí para instalar `uv` - te recomiendo usar el enfoque del Instalador Autónomo en la parte superior:
+[https://docs.astral.sh/uv/getting-started/installation/](https://docs.astral.sh/uv/getting-started/installation/)
 
-Start by running `uv self update` to make sure you're on the latest version of uv.
+Luego, dentro de Cursor, selecciona Ver >> Terminal para ver una ventana de terminal dentro de Cursor.
+Escribe `pwd` para ver el directorio actual y asegúrate de que estás en el directorio 'agents'. Para mí es `/Users/ed/projects/agents`, y debería ser algo similar para ti.
 
-One thing to watch for: if you've used Anaconda before, make sure that your Anaconda environment is deactivated   
+Comienza ejecutando `uv self update` para asegurarte de tener la versión más reciente de `uv`.
+
+Algo a tener en cuenta: si has usado Anaconda antes, asegúrate de desactivar tu entorno de Anaconda:
 `conda deactivate`
 
-And if you still have any problems with python versions, it's possible that you will need this too:  
+Y si aún tienes problemas con las versiones de Python, es posible que también necesites esto:
 `conda config --set auto_activate_base false`
 
-And now simply run:  
-`uv sync`  
-And marvel at the speed and reliability! If necessary, uv should install python 3.12, and then it should install all the packages.  
-If you get an error about "invalid certificate" while running `uv sync`, then please try this instead:  
-`uv --native-tls sync`  
-And also try this instead:  
+Y ahora simplemente ejecuta:
+`uv sync`
+¡Y maravíllate con la velocidad y fiabilidad! Si es necesario, `uv` debería instalar Python 3.12 y luego instalar todos los paquetes.
+Si obtienes un error sobre "certificado inválido" mientras ejecutas `uv sync`, prueba esto en su lugar:
+`uv --native-tls sync`
+Y también prueba esto:
 `uv --allow-insecure-host github.com sync`
 
-Finally, run these commands to be ready to use CrewAI in week 3:  
-`uv tool install crewai`   
-Followed by:  
-`uv tool upgrade crewai`  
+Finalmente, ejecuta estos comandos para estar listo para usar CrewAI en la semana 3:
+`uv tool install crewai`
+Seguido de:
+`uv tool upgrade crewai`
 
-Checking that everything is set up nicely:  
-1. Confirm that you now have a folder called '.venv' in your project root directory (agents)
-2. If you run `uv python list` you should see a Python 3.12 version in your list (there might be several)
-3. If you run `uv tool list` you should see crewai as a tool
+### Parte 4: Clave de OpenAI
 
-Just FYI on using uv:  
-With uv, you do a few things differently:  
-- Instead of `pip install xxx` you do `uv add xxx` - it gets included in your `pyproject.toml` file and will be automatically installed next time you need it  
-- Instead of `python my_script.py` you do `uv run my_script.py` which updates and activates the environment and calls your script  
-- You don't actually need to run `uv sync` because uv does this for you whenever you call `uv run`  
-- It's better not to edit pyproject.toml yourself, and definitely don't edit uv.lock. If you want to upgrade all your packages, run `uv lock --upgrade`
-- uv has really terrific docs [here](https://docs.astral.sh/uv/) - well worth a read!
+Esto es OPCIONAL - no es necesario gastar dinero en APIs si no quieres.
 
-### Part 4: OpenAI Key
+Pero es muy recomendable para obtener el mejor rendimiento de tu sistema Agente.
 
-This is OPTIONAL - there's no need to spend money on APIs if you don't want to.
+Si tienes preocupaciones sobre los costos de la API y prefieres usar alternativas baratas o gratuitas, consulta [esta guía](../guides/09_ai_apis_and_ollama.ipynb)
+Esto incluye instrucciones para usar OpenRouter en lugar de OpenAI, lo que podría tener un sistema de facturación más conveniente para algunos países.
 
-But it is strongly recommended for the best performance of your Agentic system.
+**Si decides usar la alternativa gratuita (Ollama), salta la Parte 4 y Parte 5 de esta guía de configuración; no necesitas una clave de API ni un archivo .env. Ve directamente a la sección titulada "¡Y eso es todo!" más abajo.**
 
-If you have concerns about API costs and would prefer to use cheap or free alternatives, please see [this guide](../guides/09_ai_apis_and_ollama.ipynb)  
-This includes instructions for using OpenRouter instead of OpenAI, which may have a more convenient billing system for some countries.
+Para OpenAI:
 
-_If you decide to use the free alternative (Ollama), then please skip the Part 4 and Part 5 of this setup guide; there's no need for an API key or a .env file. Go straight to the section headed "And that's it!" below._
+1. Crea una cuenta en OpenAI si no tienes una visitando:
+   [https://platform.openai.com/](https://platform.openai.com/)
 
-For OpenAI:
+2. OpenAI solicita un crédito mínimo para usar la API. En mi caso, en EE. UU., es \$5. Las llamadas a la API se gastarán contra esos \$5. En este curso, solo usaremos una pequeña parte de esta cantidad. Te recomiendo hacer esta inversión ya que podrás usarla de manera excelente. Ten en cuenta: los sistemas Agentes son menos predecibles que el software tradicional, ¡y esa es usualmente la intención! También significa que hay algunos riesgos en cuanto a los costos. Establece un presupuesto fijo para tus LLMs y asegúrate de monitorear los costos con cuidado.
 
-1. Create an OpenAI account if you don't have one by visiting:  
-https://platform.openai.com/
+Puedes agregar tu saldo de crédito a OpenAI en Configuración > Facturación:
+[https://platform.openai.com/settings/organization/billing/overview](https://platform.openai.com/settings/organization/billing/overview)
 
-2. OpenAI asks for a minimum credit to use the API. For me in the US, it's \$5. The API calls will spend against this \$5. On this course, we'll only use a small portion of this. I do recommend you make the investment as you'll be able to put it to excellent use. Do keep in mind: Agentic systems are less predictable than traditional software engineering, and that's usually the intention! It also means there are some risks when it comes to costs. Set a fixed budget for your LLMs, and be sure to monitor costs carefully.
+Te recomiendo **desactivar** la recarga automática.
 
-You can add your credit balance to OpenAI at Settings > Billing:  
-https://platform.openai.com/settings/organization/billing/overview
+3. Crea tu clave API
 
-I recommend you **disable** the automatic recharge!
+La página donde configuras tu clave de OpenAI está en [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys) - presiona el botón verde 'Crear nueva clave secreta' y luego presiona 'Crear clave secreta'. Guarda un registro de la clave API en un lugar privado; no podrás recuperarla desde las pantallas de OpenAI en el futuro. Comenzará con `sk-proj-`.
 
-3. Create your API key
+También configuraremos claves para Anthropic y Google, lo cual podrás hacer cuando lleguemos allí.
 
-The webpage where you set up your OpenAI key is at https://platform.openai.com/api-keys - press the green 'Create new secret key' button and press 'Create secret key'. Keep a record of the API key somewhere private; you won't be able to retrieve it from the OpenAI screens in the future. It should start `sk-proj-`.
+* API de Claude en [https://console.anthropic.com/](https://console.anthropic.com/) de Anthropic
+* API de Gemini en [https://aistudio.google.com/](https://aistudio.google.com/) de Google
 
-We will also set up keys for Anthropic and Google, which you can do here when we get there.  
-- Claude API at https://console.anthropic.com/ from Anthropic
-- Gemini API at https://aistudio.google.com/ from Google
+Durante el curso, también te guiaré para configurar varias otras APIs que son gratuitas o de muy bajo costo.
 
-During the course, I'll also direct you to set up a number of other APIs that are free or very low cost.
+### Parte 5: El archivo `.env`
 
-### Part 5: The `.env` file
+Cuando tengas la clave, es hora de crear tu archivo `.env`:
 
-When you have the key, it's time to create your `.env` file:
+1. En Cursor, ve al menú Archivo y selecciona "Nuevo
 
-1. In Cursor, go to the File menu and select "New Text File".
 
-Type the following, being SUPER careful that you get this exactly right:
+archivo de texto".
+
+Escribe lo siguiente, con MUCHO cuidado de que sea exactamente correcto:
 
 `OPENAI_API_KEY=`
 
-And then after the equals sign, paste in your key from OpenAI. So after you've completed this, it should look like this:
+Y luego, después del signo igual, pega tu clave de OpenAI. Así que después de completar esto, debería lucir así:
 
 `OPENAI_API_KEY=sk-proj-lots_of_characters_here`
 
-But obviously the stuff to the right of the equals sign needs to match your key exactly.
+Pero obviamente, lo que está a la derecha del signo igual debe coincidir exactamente con tu clave.
 
-Some people have got stuck because they've mistyped the start of the key as OPEN_API_KEY (missing the letters AI) and some people have the value as `sk-proj-sk-proj-...`.
+Algunas personas se han atascado porque han escrito mal el inicio de la clave como OPEN\_API\_KEY (sin las letras AI) y algunas personas tienen el valor como `sk-proj-sk-proj-...`.
 
-If you have other keys, you can add them too, or come back to this in future weeks:  
+Si tienes otras claves, también puedes agregarlas o volver a esto en las semanas posteriores:
+
 ```
-GOOGLE_API_KEY=xxxx
-ANTHROPIC_API_KEY=xxxx
+GOOGLE_API_KEY=xxxx  
+ANTHROPIC_API_KEY=xxxx  
 DEEPSEEK_API_KEY=xxxx
 ```
 
-2. Now go to File menu >> Save As.. and save the file in the directory called `agents` (also known as the project root directory) with the name `.env`  
+2. Ahora ve al menú Archivo >> Guardar como.. y guarda el archivo en el directorio llamado `agents` (también conocido como el directorio raíz del proyecto) con el nombre `.env`
 
-Here's the thing: it **needs** to go in the directory named `agents` and it **needs** to be named precisely `.env` -- not "env" and not "env.txt" or ".env.txt" but exactly the 4 characters `.env` otherwise it won't work!! 
+Aquí está el detalle: **necesita** estar en el directorio llamado `agents` y **necesita** llamarse exactamente `.env` — ¡no "env" ni "env.txt" ni ".env.txt", sino exactamente los 4 caracteres `.env`! ¡De lo contrario, no funcionará!
 
-Hopefully you're now the proud owner of your very own `.env` file with your key inside, and you're ready for action.
+¡Espero que ahora seas el orgulloso propietario de tu propio archivo `.env` con tu clave dentro y estés listo para la acción!
 
-**IMPORTANT: be sure to Save the .env file after you edit it.**
+**IMPORTANTE: asegúrate de guardar el archivo .env después de editarlo.**
 
-## And that's it!!
+## ¡Y eso es todo!
 
-To get started in Cursor, check that you've installed the Python and Jupyter extensions as described in Part 2 above. Then, open the directory called `1_foundations` in the explorer on the left, and double click on `1_lab1.ipynb` to launch the first lab. Click where it says "Select Kernel" near the top right, and select the option called `.venv (Python 3.12.9)` or similar, which should be the first choice or the most prominent choice (you might need to click 'Python Environments' first). Then click in the first cell with code, and press Shift + Enter to execute it.
+Para comenzar en Cursor, revisa que hayas instalado las extensiones de Python y Jupyter como se describe en la Parte 2 de arriba. Luego, abre el directorio llamado `1_foundations` en el explorador de la izquierda y haz doble clic en `1_lab1.ipynb` para lanzar el primer laboratorio. Haz clic donde dice "Select Kernel" cerca de la parte superior derecha y selecciona la opción llamada `.venv (Python 3.12.9)` o algo similar, que debería ser la primera opción o la más prominente (es posible que necesites hacer clic primero en 'Python Environments'). Luego haz clic en la primera celda con código y presiona Shift + Enter para ejecutarlo.
 
-After you click "Select Kernel", if there is no option like `.venv (Python 3.12.9)` then please do the following:  
-1. From the Cursor menu, choose Settings >> VSCode Settings (NOTE: be sure to select `VSCode Settings` not `Cursor Settings`)   
-2. In the Settings search bar, type "venv"  
-3. In the field "Path to folder with a list of Virtual Environments" put the path to the project root, like /Users/username/projects/agents  
-And then try again.
+Si no aparece una opción como `.venv (Python 3.12.9)`, haz lo siguiente:
 
-If you have any problems, I've included a Guide called [troubleshooting.ipynb](troubleshooting.ipynb) to figure it out.
+1. Desde el menú de Cursor, elige Configuración >> Configuración de VSCode (NOTA: asegúrate de seleccionar `Configuración de VSCode`, no `Configuración de Cursor`)
+2. En la barra de búsqueda de Configuración, escribe "venv"
+3. En el campo "Ruta a la carpeta con una lista de Entornos Virtuales" pon la ruta al directorio raíz del proyecto, como `/Users/username/projects/agents`
+   Y luego intenta nuevamente.
 
-Please do message me or email me at ed@edwarddonner.com if this doesn't work or if I can help with anything. I can't wait to hear how you get on.
+Si tienes problemas, he incluido una Guía llamada [troubleshooting.ipynb](troubleshooting.ipynb) para resolverlos.
+
+Por favor, envíame un mensaje en [https://www.linkedin.com/in/juan-gabriel-gomila-salas/](https://www.linkedin.com/in/juan-gabriel-gomila-salas/) si esto no funciona o si puedo ayudarte en algo. Estoy deseando saber cómo te va.
