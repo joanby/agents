@@ -26,13 +26,13 @@ class Diagnostics:
 
     def start(self):
         now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.log(f"Starting diagnostics at {now}\n")
+        self.log(f"Iniciando el diagnostico: {now}\n")
 
     def end(self):
         now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.log(f"\n\nCompleted diagnostics at {now}\n")
-        print("\nPlease send these diagnostics to me at ed@edwarddonner.com")
-        print(f"Either copy & paste the above output into an email, or attach the file {self.FILENAME} that has been created in this directory.")
+        self.log(f"\n\n Hemos completado el diagnóstico a las {now}\n")
+        print("\nSi lo necesitas, envíame el diagnóstico a juangabriel@frogames.es")
+        print(f"Copia y pega el resultado anterior en un correo electrónico o adjunta el archivo {self.FILENAME} que se ha creado en este directorio.")
     
 
     def _log_error(self, message):
@@ -40,7 +40,7 @@ class Diagnostics:
         self.errors.append(message)
 
     def _log_warning(self, message):
-        self.log(f"WARNING: {message}")
+        self.log(f"ADVERTENCIA: {message}")
         self.warnings.append(message)
 
     def run(self):
@@ -55,41 +55,41 @@ class Diagnostics:
         self._step9_additional_diagnostics()
 
         if self.warnings:
-            self.log("\n===== Warnings Found =====")
-            self.log("The following warnings were detected. They might not prevent the program from running but could cause unexpected behavior:")
+            self.log("\n===== Advertencias encontradas =====")
+            self.log("Se detectaron las siguientes advertencias. Es posible que no impidan la ejecución del programa, pero podrían causar un comportamiento inesperado:")
             for warning in self.warnings:
                 self.log(f"- {warning}")
 
         if self.errors:
-            self.log("\n===== Errors Found =====")
-            self.log("The following critical issues were detected. Please address them before proceeding:")
+            self.log("\n===== Errores Encontrados =====")
+            self.log("Se detectaron los siguientes problemas críticos. Por favor, corríjalos antes de continuar.:")
             for error in self.errors:
                 self.log(f"- {error}")
 
         if not self.errors and not self.warnings:
-            self.log("\n✅ All diagnostics passed successfully!")
+            self.log("\n✅ Todos los diagnosticos completados correctamente!")
 
         self.end()
 
     def _step1_system_info(self):
-        self.log("===== System Information =====")
+        self.log("===== Información del Sistema =====")
         try:
             system = platform.system()
-            self.log(f"Operating System: {system}")
+            self.log(f"Sistema Operativo: {system}")
 
             if system == "Windows":
                 release, version, csd, ptype = platform.win32_ver()
                 self.log(f"Windows Release: {release}")
-                self.log(f"Windows Version: {version}")
+                self.log(f"Version de Windows: {version}")
             elif system == "Darwin":
                 release, version, machine = platform.mac_ver()
-                self.log(f"MacOS Version: {release}")
+                self.log(f"Version de MacOS: {release}")
             else:
-                self.log(f"Platform: {platform.platform()}")
+                self.log(f"Plataforma: {platform.platform()}")
 
-            self.log(f"Architecture: {platform.architecture()}")
-            self.log(f"Machine: {platform.machine()}")
-            self.log(f"Processor: {platform.processor()}")
+            self.log(f"Arquitectura: {platform.architecture()}")
+            self.log(f"Máquina: {platform.machine()}")
+            self.log(f"Procesador: {platform.processor()}")
 
             try:
                 import psutil
@@ -97,25 +97,25 @@ class Diagnostics:
                 total_ram_gb = ram.total / (1024 ** 3)
                 available_ram_gb = ram.available / (1024 ** 3)
                 self.log(f"Total RAM: {total_ram_gb:.2f} GB")
-                self.log(f"Available RAM: {available_ram_gb:.2f} GB")
+                self.log(f"RAM Disponible: {available_ram_gb:.2f} GB")
 
                 if available_ram_gb < 2:
-                    self._log_warning(f"Low available RAM: {available_ram_gb:.2f} GB")
+                    self._log_warning(f"Poca memoria RAM disponible: {available_ram_gb:.2f} GB")
             except ImportError:
-                self._log_warning("psutil module not found. Cannot determine RAM information.")
+                self._log_warning("El módulo psutil no se ha encontrado. No se puede determinar la información de la memoria RAM.")
 
             total, used, free = shutil.disk_usage(os.path.expanduser("~"))
             free_gb = free / (1024 ** 3)
-            self.log(f"Free Disk Space: {free_gb:.2f} GB")
+            self.log(f"Espacio de disco libre: {free_gb:.2f} GB")
 
             if free_gb < 5:
-                self._log_warning(f"Low disk space: {free_gb:.2f} GB free")
+                self._log_warning(f"Poco espacio en disco: {free_gb:.2f} GB free")
 
         except Exception as e:
-            self._log_error(f"System information check failed: {e}")
+            self._log_error(f"Comprobación de la información de sistema fallida: {e}")
 
     def _step2_check_files(self):
-        self.log("\n===== File System Information =====")
+        self.log("\n===== Información del sistema de archivos =====")
         try:
             current_dir = os.getcwd()
             parent_dir = os.path.dirname(current_dir)
@@ -126,48 +126,48 @@ class Diagnostics:
             try:
                 test_file.touch(exist_ok=True)
                 test_file.unlink()
-                self.log("Write permission: OK")
+                self.log("Permisos de Escritura: OK")
             except Exception as e:
-                self._log_error(f"No write permission in current directory: {e}")
+                self._log_error(f"No hay permiso de escritura en el directorio actual: {e}")
 
-            self.log("\nFiles in Parent Directory:")
+            self.log("\nArchivos en el directorio Padre:")
             try:
                 for item in sorted(os.listdir(parent_dir)):
                     self.log(f" - {item}")
             except Exception as e:
-                self._log_error(f"Cannot list directory contents: {e}")
+                self._log_error(f"No se puede enumerar el contenido del directorio: {e}")
 
         except Exception as e:
-            self._log_error(f"File system check failed: {e}")
+            self._log_error(f"La comprobación del sistema de archivos falló: {e}")
 
     def _step3_git_repo(self):
-        self.log("\n===== Git Repository Information =====")
+        self.log("\n===== Información del Repositorio Git =====")
         try:
             result = subprocess.run(['git', 'rev-parse', '--show-toplevel'],
                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             if result.returncode == 0:
                 git_root = result.stdout.strip()
-                self.log(f"Git Repository Root: {git_root}")
+                self.log(f"Raíz del repositorio Git: {git_root}")
 
                 result = subprocess.run(['git', 'rev-parse', 'HEAD'],
                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
                 if result.returncode == 0:
-                    self.log(f"Current Commit: {result.stdout.strip()}")
+                    self.log(f"Commit Actual: {result.stdout.strip()}")
                 else:
-                    self._log_warning(f"Could not get current commit: {result.stderr.strip()}")
+                    self._log_warning(f"No se pudo obtener el commit actual: {result.stderr.strip()}")
 
                 result = subprocess.run(['git', 'remote', 'get-url', 'origin'],
                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
                 if result.returncode == 0:
-                    self.log(f"Remote Origin: {result.stdout.strip()}")
+                    self.log(f"Origen Remoto: {result.stdout.strip()}")
                 else:
-                    self._log_warning("No remote 'origin' configured")
+                    self._log_warning("No se ha configurado el 'origin' remoto")
             else:
-                self._log_warning("Not a git repository")
+                self._log_warning("No es un repositorio Git")
         except FileNotFoundError:
-            self._log_warning("Git is not installed or not in PATH")
+            self._log_warning("Git no se encuentra instalado o no está en el PATH")
         except Exception as e:
-            self._log_error(f"Git check failed: {e}")
+            self._log_error(f"Falló el chequeo de git: {e}")
 
     def _step4_check_env_file(self):
         self.log("\n===== Environment File Check =====")
