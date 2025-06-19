@@ -8,15 +8,15 @@ from coder.crew import Coder
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
-# Create output directory if it doesn't exist
+# Crea el directorio de salida si no existe
 os.makedirs('output', exist_ok=True)
 
-assignment = 'Write a python program to calculate the first 10,000 terms \
-    of this series, multiplying the total by 4: 1 - 1/3 + 1/5 - 1/7 + ...'
+assignment = 'Escribe un programa Python para calcular los primeros 10,000 términos \
+    de esta serie, multiplicando el total por 4: 1 - 1/3 + 1/5 - 1/7 + ...'
 
 def run():
     """
-    Run the crew.
+    Ejecuta la Crew.
     """
     inputs = {
         'assignment': assignment,

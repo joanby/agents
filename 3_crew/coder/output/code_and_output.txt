@@ -1,16 +1,16 @@
 ```
 ```plaintext
-# Calculate the value of the series 1 - 1/3 + 1/5 - 1/7 + ... for the first 10,000 terms
+# Calcula el valor de la serie 1 - 1/3 + 1/5 - 1/7 + ... para los primeros 10,000 términos
 def calculate_series(n_terms):
     total = 0
     for i in range(n_terms):
-        term = (-1) ** i / (2 * i + 1)  # Calculate each term in the series
-        total += term  # Add or subtract the term based on its position
-    total *= 4  # Multiply the total by 4
+        term = (-1) ** i / (2 * i + 1)  # Calcula cada término de la serie
+        total += term  # Suma o resta el término basándose en la posición
+    total *= 4  # Multiplica el valor final por 4
     return total
 
-# Calculate the first 10,000 terms
+# Calcula los primeros 10,000 términos
 result = calculate_series(10000)
 print(result)
 
-# Output: 3.1414926535900345
+# Salida: 3.1414926535900345

@@ -1,5 +1,5 @@
 def get_share_price(symbol):
-    """Test implementation that returns fixed prices for AAPL, TSLA, GOOGL"""
+    """Implementación de prueba que devuelve precios fijos para AAPL, TSLA, GOOGL"""
     prices = {
         'AAPL': 150.0,
         'TSLA': 800.0,
@@ -10,10 +10,10 @@ def get_share_price(symbol):
 class Account:
     def __init__(self, account_id: str):
         """
-        Initializes a new account with a unique account_id.
+        Inicializa una nueva cuenta con un account_id único.
         
         Args:
-            account_id: A unique identifier for the account
+            account_id: Un identificador único para la cuenta
         """
         self.account_id = account_id
         self.balance = 0.0
@@ -23,13 +23,13 @@ class Account:
         
     def deposit(self, amount: float) -> bool:
         """
-        Adds funds to the user's account.
+        Añade fondos a la cuenta del usuario.
         
         Args:
-            amount: The amount to deposit
+            amount: La cantidad a depositar
             
         Returns:
-            True if successful, False for invalid operations
+            True si es exitoso, False para operaciones inválidas
         """
         if amount <= 0:
             return False
@@ -51,13 +51,13 @@ class Account:
         
     def withdraw(self, amount: float) -> bool:
         """
-        Withdraws funds from the user's account.
+        Retira fondos de la cuenta del usuario.
         
         Args:
-            amount: The amount to withdraw
+            amount: La cantidad a retirar
             
         Returns:
-            True if successful, False otherwise
+            True si es exitoso, False en caso contrario
         """
         if not self.can_withdraw(amount):
             return False
@@ -75,15 +75,15 @@ class Account:
         
     def buy_shares(self, symbol: str, quantity: int, get_share_price: callable) -> bool:
         """
-        Buys shares of the given symbol.
+        Compra acciones del símbolo dado.
         
         Args:
-            symbol: The stock symbol
-            quantity: The number of shares to buy
-            get_share_price: Function to get the current price of a share
+            symbol: El símbolo de la acción
+            quantity: El número de acciones a comprar
+            get_share_price: Función para obtener el precio actual de una acción
             
         Returns:
-            True if successful, False otherwise
+            True si es exitoso, False en caso contrario
         """
         if not self.can_buy_shares(symbol, quantity, get_share_price):
             return False
@@ -113,15 +113,15 @@ class Account:
         
     def sell_shares(self, symbol: str, quantity: int, get_share_price: callable) -> bool:
         """
-        Sells shares of the given symbol.
+        Vende acciones del símbolo dado.
         
         Args:
-            symbol: The stock symbol
-            quantity: The number of shares to sell
-            get_share_price: Function to get the current price of a share
+            symbol: El símbolo de la acción
+            quantity: El número de acciones a vender
+            get_share_price: Función para obtener el precio actual de una acción
             
         Returns:
-            True if successful, False otherwise
+            True si es exitoso, False en caso contrario
         """
         if not self.can_sell_shares(symbol, quantity):
             return False
@@ -150,13 +150,13 @@ class Account:
         
     def get_portfolio_value(self, get_share_price: callable) -> float:
         """
-        Calculates the total current value of the user's portfolio.
+        Calcula el valor total actual del portafolio del usuario.
         
         Args:
-            get_share_price: Function to get the current price of a share
+            get_share_price: Función para obtener el precio actual de una acción
             
         Returns:
-            The total portfolio value
+            El valor total del portafolio
         """
         value = 0.0
         for symbol, quantity in self.holdings.items():
@@ -167,58 +167,58 @@ class Account:
         
     def get_profit_or_loss(self, get_share_price: callable) -> float:
         """
-        Calculates the user's profit or loss from their initial deposit.
+        Calcula el beneficio o pérdida del usuario desde su depósito inicial.
         
         Args:
-            get_share_price: Function to get the current price of a share
+            get_share_price: Función para obtener el precio actual de una acción
             
         Returns:
-            The profit or loss amount
+            La cantidad de beneficio o pérdida
         """
         current_total = self.balance + self.get_portfolio_value(get_share_price)
         return current_total - self.initial_deposit
         
     def get_holdings(self) -> dict:
         """
-        Returns the user's current share holdings.
+        Retorna las acciones actuales del usuario.
         
         Returns:
-            A dictionary of symbol -> quantity
+            Un diccionario de símbolo -> cantidad
         """
         return self.holdings.copy()
         
     def get_transactions(self) -> list:
         """
-        Returns a list of all transactions the user has made.
+        Retorna una lista de todas las transacciones que el usuario ha realizado.
         
         Returns:
-            A list of transaction dictionaries
+            Una lista de diccionarios de transacciones
         """
         return self.transactions.copy()
         
     def can_withdraw(self, amount: float) -> bool:
         """
-        Checks if the user can withdraw the specified amount.
+        Verifica si el usuario puede retirar la cantidad especificada.
         
         Args:
-            amount: The amount to check
+            amount: La cantidad a verificar
             
         Returns:
-            True if the withdrawal is possible, False otherwise
+            True si es posible retirar, False en caso contrario
         """
         return amount > 0 and self.balance >= amount
         
     def can_buy_shares(self, symbol: str, quantity: int, get_share_price: callable) -> bool:
         """
-        Checks if the user can afford to buy the specified shares.
+        Verifica si el usuario puede comprar las acciones especificadas.
         
         Args:
-            symbol: The stock symbol
-            quantity: The number of shares to check
-            get_share_price: Function to get the current price of a share
+            symbol: El símbolo de la acción
+            quantity: El número de acciones a verificar
+            get_share_price: Función para obtener el precio actual de una acción
             
         Returns:
-            True if the purchase is possible, False otherwise
+            True si es posible comprar, False en caso contrario
         """
         if quantity <= 0:
             return False
@@ -228,14 +228,14 @@ class Account:
         
     def can_sell_shares(self, symbol: str, quantity: int) -> bool:
         """
-        Checks if the user owns enough shares to sell.
+        Verifica si el usuario tiene suficientes acciones para vender.
         
         Args:
-            symbol: The stock symbol
-            quantity: The number of shares to check
+            symbol: El símbolo de la acción
+            quantity: El número de acciones a verificar
             
         Returns:
-            True if the sale is possible, False otherwise
+            True si es posible vender, False en caso contrario
         """
         if quantity <= 0:
             return False

@@ -1,7 +1,7 @@
 [project]
 name = "debate"
 version = "0.1.0"
-description = "debate using crewAI"
+description = "debate mediante crewAI"
 authors = [{ name = "Your Name", email = "you@example.com" }]
 requires-python = ">=3.10,<3.13"
 dependencies = [

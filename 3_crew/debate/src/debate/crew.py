@@ -4,7 +4,7 @@ from crewai.project import CrewBase, agent, crew, task
 
 @CrewBase
 class Debate():
-    """Debate crew"""
+    """Crew Debate"""
 
 
     agents_config = 'config/agents.yaml'
