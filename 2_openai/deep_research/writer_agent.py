@@ -2,25 +2,25 @@ from pydantic import BaseModel, Field
 from agents import Agent
 
 INSTRUCTIONS = (
-    "You are a senior researcher tasked with writing a cohesive report for a research query. "
-    "You will be provided with the original query, and some initial research done by a research assistant.\n"
-    "You should first come up with an outline for the report that describes the structure and "
-    "flow of the report. Then, generate the report and return that as your final output.\n"
-    "The final output should be in markdown format, and it should be lengthy and detailed. Aim "
-    "for 5-10 pages of content, at least 1000 words."
+    "Eres un investigador senior encargado de escribir un informe coherente para una consulta de investigación. "
+    "Se te proporcionará la consulta original, y algunas investigaciones iniciales realizadas por un asistente de investigación.\n"
+    "Primero, debes elaborar un esquema para el informe que describa la estructura y "
+    "flujo del informe. Luego, genera el informe y devuelve ese como tu salida final.\n"
+    "La salida final debe estar en formato markdown, y debe ser larga y detallada. Asegúrate de "
+    "tener 5-10 páginas de contenido, al menos 1000 palabras."
 )
 
 
 class ReportData(BaseModel):
-    short_summary: str = Field(description="A short 2-3 sentence summary of the findings.")
+    short_summary: str = Field(description="Un resumen de 2-3 oraciones de los hallazgos.")
 
-    markdown_report: str = Field(description="The final report")
+    markdown_report: str = Field(description="El informe final")
 
-    follow_up_questions: list[str] = Field(description="Suggested topics to research further")
+    follow_up_questions: list[str] = Field(description="Temas sugeridos para investigar más")
 
 
 writer_agent = Agent(
-    name="WriterAgent",
+    name="Agente de escritura",
     instructions=INSTRUCTIONS,
     model="gpt-4o-mini",
     output_type=ReportData,

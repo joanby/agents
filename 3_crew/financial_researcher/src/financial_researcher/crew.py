@@ -5,7 +5,7 @@ from crewai_tools import SerperDevTool
 
 @CrewBase
 class ResearchCrew():
-    """Research crew for comprehensive topic analysis and reporting"""
+    """Crew para investigación financiera y creación de informes"""
 
     @agent
     def researcher(self) -> Agent:
@@ -31,13 +31,12 @@ class ResearchCrew():
     @task
     def analysis_task(self) -> Task:
         return Task(
-            config=self.tasks_config['analysis_task'],
-            output_file='output/report.md'
+            config=self.tasks_config['analysis_task']
         )
 
     @crew
     def crew(self) -> Crew:
-        """Creates the research crew"""
+        """Crea la crew para investigación financiera y creación de informes"""
         return Crew(
             agents=self.agents,
             tasks=self.tasks,

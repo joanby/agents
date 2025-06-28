@@ -1,0 +1,30 @@
+find_trending_companies:
+  description: >
+    Encuentra las empresas en tendencia más importantes en las noticias del sector de {sector} buscando las últimas noticias. 
+    Encuentra nuevas empresas que no has encontrado antes.
+  expected_output: >
+    Una lista de empresas en tendencia en el sector de {sector}
+  agent: trending_company_finder
+  output_file: output/trending_companies.json
+
+research_trending_companies:
+  description: >
+    Dada una lista de empresas en tendencia, proporciona un análisis detallado de cada empresa en un informe buscando en línea
+  expected_output: >
+    Un informe que contiene un análisis detallado de cada empresa
+  agent: financial_researcher
+  context:
+    - find_trending_companies
+  output_file: output/research_report.json
+
+pick_best_company:
+  description: >
+    Analiza los hallazgos de la investigación y elige la mejor empresa para inversión.
+    Envía una notificación push al usuario con la decisión y un razonamiento de 1 frase.
+    Luego responde con un informe detallado sobre por qué elegiste esta empresa, y cuáles empresas no fueron seleccionadas.
+  expected_output: >
+    La empresa elegida y por qué fue elegida; las empresas que no fueron seleccionadas y por qué no fueron seleccionadas.
+  agent: stock_picker
+  context:
+    - research_trending_companies
+  output_file: output/decision.md

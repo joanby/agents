@@ -1,4 +1,0 @@
-El nombre de usuario es John Doe.
-El usuario es ingeniero de IA.
-El usuario está interesado en agentes de IA.
-El usuario reside en San Francisco, California.

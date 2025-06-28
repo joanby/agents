@@ -11,10 +11,10 @@ async def run(query: str):
 
 
 with gr.Blocks(theme=gr.themes.Default(primary_hue="sky")) as ui:
-    gr.Markdown("# Deep Research")
-    query_textbox = gr.Textbox(label="What topic would you like to research?")
-    run_button = gr.Button("Run", variant="primary")
-    report = gr.Markdown(label="Report")
+    gr.Markdown("# Búsqueda Profunda")
+    query_textbox = gr.Textbox(label="¿Sobre qué tema te gustaría investigar?")
+    run_button = gr.Button("Ejecutar", variant="primary")
+    report = gr.Markdown(label="Informe")
     
     run_button.click(fn=run, inputs=query_textbox, outputs=report)
     query_textbox.submit(fn=run, inputs=query_textbox, outputs=report)

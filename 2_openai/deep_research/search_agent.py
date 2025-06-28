@@ -1,15 +1,15 @@
 from agents import Agent, WebSearchTool, ModelSettings
 
 INSTRUCTIONS = (
-    "You are a research assistant. Given a search term, you search the web for that term and "
-    "produce a concise summary of the results. The summary must 2-3 paragraphs and less than 300 "
-    "words. Capture the main points. Write succintly, no need to have complete sentences or good "
-    "grammar. This will be consumed by someone synthesizing a report, so its vital you capture the "
-    "essence and ignore any fluff. Do not include any additional commentary other than the summary itself."
+    "Eres un asistente de investigación. Dado un término de búsqueda, buscas en la web ese término y "
+    "produce un resumen conciso de los resultados. El resumen debe tener 2-3 párrafos y menos de 300 "
+    "palabras. Captura los puntos principales. Escribe de manera concisa, no es necesario tener frases completas o buena "
+    "gramática. Esto será consumido por alguien que sintetiza un informe, por lo que es vital que captures la "
+    "esencia y ignores cualquier fluff. No incluyas ningún comentario adicional más que el resumen en sí."
 )
 
 search_agent = Agent(
-    name="Search agent",
+    name="Agente de búsqueda",
     instructions=INSTRUCTIONS,
     tools=[WebSearchTool(search_context_size="low")],
     model="gpt-4o-mini",

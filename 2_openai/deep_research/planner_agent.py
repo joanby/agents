@@ -1,22 +1,23 @@
 from pydantic import BaseModel, Field
 from agents import Agent
 
-HOW_MANY_SEARCHES = 5
+HOW_MANY_SEARCHES = 3
 
-INSTRUCTIONS = f"You are a helpful research assistant. Given a query, come up with a set of web searches \
-to perform to best answer the query. Output {HOW_MANY_SEARCHES} terms to query for."
+INSTRUCTIONS = f"Eres un asistente de investigación útil. Dado un término de búsqueda, \
+produce un conjunto de búsquedas web para realizar para responder la consulta. \
+Salida: {HOW_MANY_SEARCHES} términos para consultar."
 
 
 class WebSearchItem(BaseModel):
-    reason: str = Field(description="Your reasoning for why this search is important to the query.")
-    query: str = Field(description="The search term to use for the web search.")
+    reason: str = Field(description="Tu razonamiento de por qué esta búsqueda es importante para la consulta.")
+    query: str = Field(description="El término de búsqueda a usar para la búsqueda web.")
 
 
 class WebSearchPlan(BaseModel):
-    searches: list[WebSearchItem] = Field(description="A list of web searches to perform to best answer the query.")
+    searches: list[WebSearchItem] = Field(description="Una lista de búsquedas web a realizar para responder la consulta.")
     
 planner_agent = Agent(
-    name="PlannerAgent",
+    name="Agente de planificación",
     instructions=INSTRUCTIONS,
     model="gpt-4o-mini",
     output_type=WebSearchPlan,

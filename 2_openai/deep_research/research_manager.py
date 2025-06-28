@@ -8,36 +8,36 @@ import asyncio
 class ResearchManager:
 
     async def run(self, query: str):
-        """ Run the deep research process, yielding the status updates and the final report"""
+        """ Ejecuta el proceso de investigación profunda, generando los actualizaciones de estado y el informe final """
         trace_id = gen_trace_id()
-        with trace("Research trace", trace_id=trace_id):
-            print(f"View trace: https://platform.openai.com/traces/trace?trace_id={trace_id}")
-            yield f"View trace: https://platform.openai.com/traces/trace?trace_id={trace_id}"
-            print("Starting research...")
+        with trace("Ingestigación", trace_id=trace_id):
+            print(f"Ver traza: https://platform.openai.com/traces/trace?trace_id={trace_id}")
+            yield f"Ver traza: https://platform.openai.com/traces/trace?trace_id={trace_id}"
+            print("Iniciando investigación...")
             search_plan = await self.plan_searches(query)
-            yield "Searches planned, starting to search..."     
+            yield "Búsquedas planificadas, iniciando búsqueda..."     
             search_results = await self.perform_searches(search_plan)
-            yield "Searches complete, writing report..."
+            yield "Búsquedas completas, escribiendo informe..."
             report = await self.write_report(query, search_results)
-            yield "Report written, sending email..."
+            yield "Informe escrito, enviando correo electrónico..."
             await self.send_email(report)
-            yield "Email sent, research complete"
+            yield "Correo electrónico enviado, investigación completa"
             yield report.markdown_report
         
 
     async def plan_searches(self, query: str) -> WebSearchPlan:
-        """ Plan the searches to perform for the query """
-        print("Planning searches...")
+        """ Planifica las búsquedas a realizar para la consulta """
+        print("Planificando búsquedas...")
         result = await Runner.run(
             planner_agent,
-            f"Query: {query}",
+            f"Consulta: {query}",
         )
-        print(f"Will perform {len(result.final_output.searches)} searches")
+        print(f"Se realizarán {len(result.final_output.searches)} búsquedas")
         return result.final_output_as(WebSearchPlan)
 
     async def perform_searches(self, search_plan: WebSearchPlan) -> list[str]:
-        """ Perform the searches to perform for the query """
-        print("Searching...")
+        """ Realiza las búsquedas para la consulta """
+        print("Buscando...")
         num_completed = 0
         tasks = [asyncio.create_task(self.search(item)) for item in search_plan.searches]
         results = []
@@ -46,13 +46,13 @@ class ResearchManager:
             if result is not None:
                 results.append(result)
             num_completed += 1
-            print(f"Searching... {num_completed}/{len(tasks)} completed")
-        print("Finished searching")
+            print(f"Buscando... {num_completed}/{len(tasks)} completadas")
+        print("Búsqueda completada")
         return results
 
     async def search(self, item: WebSearchItem) -> str | None:
-        """ Perform a search for the query """
-        input = f"Search term: {item.query}\nReason for searching: {item.reason}"
+        """ Realiza una búsqueda para la consulta """
+        input = f"Término de búsqueda: {item.query}\nRazón para buscar: {item.reason}"
         try:
             result = await Runner.run(
                 search_agent,
@@ -63,22 +63,22 @@ class ResearchManager:
             return None
 
     async def write_report(self, query: str, search_results: list[str]) -> ReportData:
-        """ Write the report for the query """
-        print("Thinking about report...")
-        input = f"Original query: {query}\nSummarized search results: {search_results}"
+        """ Escribe el informe para la consulta """
+        print("Pensando en el informe...")
+        input = f"Consulta original: {query}\nResultados de búsqueda resumidos: {search_results}"
         result = await Runner.run(
             writer_agent,
             input,
         )
 
-        print("Finished writing report")
+        print("Informe escrito")
         return result.final_output_as(ReportData)
     
     async def send_email(self, report: ReportData) -> None:
-        print("Writing email...")
+        print("Escribiendo correo electrónico...")
         result = await Runner.run(
             email_agent,
             report.markdown_report,
         )
-        print("Email sent")
+        print("Correo electrónico enviado")
         return report

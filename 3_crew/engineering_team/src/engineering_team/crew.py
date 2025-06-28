@@ -5,7 +5,7 @@ from crewai.project import CrewBase, agent, crew, task
 
 @CrewBase
 class EngineeringTeam():
-    """EngineeringTeam crew"""
+    """Tripulación de Ingenieros"""
 
     agents_config = 'config/agents.yaml'
     tasks_config = 'config/tasks.yaml'
@@ -24,8 +24,8 @@ class EngineeringTeam():
             verbose=True,
             allow_code_execution=True,
             code_execution_mode="safe",  # Uses Docker for safety
-            max_execution_time=500, 
-            max_retry_limit=3 
+            max_execution_time=240, 
+            max_retry_limit=5 
         )
     
     @agent
@@ -42,8 +42,8 @@ class EngineeringTeam():
             verbose=True,
             allow_code_execution=True,
             code_execution_mode="safe",  # Uses Docker for safety
-            max_execution_time=500, 
-            max_retry_limit=3 
+            max_execution_time=240, 
+            max_retry_limit=5 
         )
 
     @task
@@ -72,7 +72,7 @@ class EngineeringTeam():
 
     @crew
     def crew(self) -> Crew:
-        """Creates the research crew"""
+        """Crea la tripulación de ingenieros"""
         return Crew(
             agents=self.agents,
             tasks=self.tasks,

@@ -1,12 +1,11 @@
 [project]
 name = "coder"
 version = "0.1.0"
-description = "Programador usando crewAI"
+description = "coder using crewAI"
 authors = [{ name = "Your Name", email = "you@example.com" }]
-requires-python = ">=3.10,<3.13"
+requires-python = ">=3.10,<3.14"
 dependencies = [
-    "crewai[tools]>=0.108.0,<1.0.0",
-    "gradio>=5.23.3",
+    "crewai[tools]>=0.130.0,<1.0.0"
 ]
 
 [project.scripts]

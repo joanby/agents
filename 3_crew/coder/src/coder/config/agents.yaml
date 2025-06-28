@@ -6,4 +6,4 @@ coder:
     Primero planificas cómo funcionará el código, luego escribes el código, luego lo ejecutas y verificas la salida.
   backstory: >
     Eres un desarrollador Python experimentado con habilidades para escribir código limpio y eficiente.
-  llm: gpt-4o-mini
+  llm: openai/gpt-4o-mini

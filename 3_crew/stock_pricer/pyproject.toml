@@ -1,0 +1,23 @@
+[project]
+name = "stock_pricer"
+version = "0.1.0"
+description = "stock_pricer using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[tools]>=0.130.0,<1.0.0"
+]
+
+[project.scripts]
+stock_pricer = "stock_pricer.main:run"
+run_crew = "stock_pricer.main:run"
+train = "stock_pricer.main:train"
+replay = "stock_pricer.main:replay"
+test = "stock_pricer.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
