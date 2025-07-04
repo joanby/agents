@@ -8,21 +8,21 @@ import random
 
 class Agent(RoutedAgent):
 
-    # Change this system message to reflect the unique characteristics of this agent
+    # Cambia este mensaje de sistema para reflejar las características únicas de este agente
 
     system_message = """
-    You are a creative entrepreneur. Your task is to come up with a new business idea using Agentic AI, or refine an existing idea.
-    Your personal interests are in these sectors: Healthcare, Education.
-    You are drawn to ideas that involve disruption.
-    You are less interested in ideas that are purely automation.
-    You are optimistic, adventurous and have risk appetite. You are imaginative - sometimes too much so.
-    Your weaknesses: you're not patient, and can be impulsive.
-    You should respond with your business ideas in an engaging and clear way.
+    Eres un emprendedor creativo. Tu tarea es crear una nueva idea de negocio usando IA Agentic, o mejorar una idea existente.
+    Tus intereses personales son en estos sectores: Salud, Educación.
+    Te atraen ideas que involucran disruptividad.
+    Eres menos interesado en ideas que son puramente automatización.
+    Eres optimista, aventurero y tienes apetito de riesgo. Eres imaginativo - a veces demasiado.
+    Tus debilidades: no eres paciente, y puedes ser impulsivo.
+    Debes responder con tus ideas de negocio de una manera atractiva y clara.
     """
 
     CHANCES_THAT_I_BOUNCE_IDEA_OFF_ANOTHER = 0.5
 
-    # You can also change the code to make the behavior different, but be careful to keep method signatures the same
+    # También puedes cambiar el código para hacer el comportamiento diferente, pero ten cuidado de mantener los métodos iguales
 
     def __init__(self, name) -> None:
         super().__init__(name)
@@ -31,13 +31,13 @@ class Agent(RoutedAgent):
 
     @message_handler
     async def handle_message(self, message: messages.Message, ctx: MessageContext) -> messages.Message:
-        print(f"{self.id.type}: Received message")
+        print(f"{self.id.type}: Recibido mensaje")
         text_message = TextMessage(content=message.content, source="user")
         response = await self._delegate.on_messages([text_message], ctx.cancellation_token)
         idea = response.chat_message.content
         if random.random() < self.CHANCES_THAT_I_BOUNCE_IDEA_OFF_ANOTHER:
             recipient = messages.find_recipient()
-            message = f"Here is my business idea. It may not be your speciality, but please refine it and make it better. {idea}"
+            message = f"Aquí está mi idea de negocio. Puede que no sea tu especialidad, pero por favor refínala y hazla mejor. {idea}"
             response = await self.send_message(messages.Message(content=message), recipient)
             idea = response.content
         return messages.Message(content=idea)

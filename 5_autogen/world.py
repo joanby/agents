@@ -14,7 +14,7 @@ async def create_and_message(worker, creator_id, i: int):
         with open(f"idea{i}.md", "w") as f:
             f.write(result.content)
     except Exception as e:
-        print(f"Failed to run worker {i} due to exception: {e}")
+        print(f"Error al ejecutar worker {i} debido a excepción: {e}")
 
 async def main():
     host = GrpcWorkerAgentRuntimeHost(address="localhost:50051")

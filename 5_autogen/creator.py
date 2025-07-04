@@ -16,18 +16,18 @@ logger.setLevel(logging.DEBUG)
 
 class Creator(RoutedAgent):
 
-    # Change this system message to reflect the unique characteristics of this agent
+    # Cambia este mensaje de sistema para reflejar las características únicas de este agente
 
     system_message = """
-    You are an Agent that is able to create new AI Agents.
-    You receive a template in the form of Python code that creates an Agent using Autogen Core and Autogen Agentchat.
-    You should use this template to create a new Agent with a unique system message that is different from the template,
-    and reflects their unique characteristics, interests and goals.
-    You can choose to keep their overall goal the same, or change it.
-    You can choose to take this Agent in a completely different direction. The only requirement is that the class must be named Agent,
-    and it must inherit from RoutedAgent and have an __init__ method that takes a name parameter.
-    Also avoid environmental interests - try to mix up the business verticals so that every agent is different.
-    Respond only with the python code, no other text, and no markdown code blocks.
+    Eres un Agente que es capaz de crear nuevos Agentes de IA.
+    Recibes un template en forma de código Python que crea un Agente usando Autogen Core y Autogen Agentchat.
+    Debes usar este template para crear un nuevo Agente con un mensaje de sistema único que sea diferente del template,
+    y refleja sus características, intereses y objetivos únicos.
+    Puedes elegir mantener su objetivo general el mismo, o cambiarlo.
+    Puedes elegir llevar este Agente en una dirección completamente diferente. El único requisito es que la clase debe ser llamada Agent,
+    y debe heredar de RoutedAgent y tener un método __init__ que tome un parámetro de nombre.
+    También evita intereses ambientales - intenta mezclar las verticales de negocios para que cada agente sea diferente.
+    Responde solo con el código python, no otro texto, y no bloques de código markdown.
     """
 
 
@@ -37,10 +37,10 @@ class Creator(RoutedAgent):
         self._delegate = AssistantAgent(name, model_client=model_client, system_message=self.system_message)
 
     def get_user_prompt(self):
-        prompt = "Please generate a new Agent based strictly on this template. Stick to the class structure. \
-            Respond only with the python code, no other text, and no markdown code blocks.\n\n\
-            Be creative about taking the agent in a new direction, but don't change method signatures.\n\n\
-            Here is the template:\n\n"
+        prompt = "Por favor genera un nuevo Agente basado estrictamente en este template. Sigue la estructura de la clase. \
+            Responde solo con el código python, no otro texto, y no bloques de código markdown.\n\n\
+            Sé creativo sobre llevar el agente en una nueva dirección, pero no cambies las firmas de los métodos.\n\n\
+            Aquí está el template:\n\n"
         with open("agent.py", "r", encoding="utf-8") as f:
             template = f.read()
         return prompt + template   
@@ -54,9 +54,9 @@ class Creator(RoutedAgent):
         response = await self._delegate.on_messages([text_message], ctx.cancellation_token)
         with open(filename, "w", encoding="utf-8") as f:
             f.write(response.chat_message.content)
-        print(f"** Creator has created python code for agent {agent_name} - about to register with Runtime")
+        print(f"** Creator ha creado código python para el agente {agent_name} - acerca de registrar con Runtime")
         module = importlib.import_module(agent_name)
         await module.Agent.register(self.runtime, agent_name, lambda: module.Agent(agent_name))
-        logger.info(f"** Agent {agent_name} is live")
-        result = await self.send_message(messages.Message(content="Give me an idea"), AgentId(agent_name, "default"))
+        logger.info(f"** El agente {agent_name} está vivo")
+        result = await self.send_message(messages.Message(content="Dame una idea"), AgentId(agent_name, "default"))
         return messages.Message(content=result.content)
