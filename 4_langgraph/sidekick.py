@@ -25,9 +25,9 @@ class State(TypedDict):
 
 
 class EvaluatorOutput(BaseModel):
-    feedback: str = Field(description="Feedback on the assistant's response")
-    success_criteria_met: bool = Field(description="Whether the success criteria have been met")
-    user_input_needed: bool = Field(description="True if more input is needed from the user, or clarifications, or the assistant is stuck")
+    feedback: str = Field(description="Comentarios sobre la respuesta del asistente")
+    success_criteria_met: bool = Field(description="Si se han cumplido los criterios de éxito")
+    user_input_needed: bool = Field(description="True si se necesita más input del usuario, o aclaraciones, o el asistente está bloqueado")
 
 
 class Sidekick:
@@ -52,30 +52,30 @@ class Sidekick:
         await self.build_graph()
 
     def worker(self, state: State) -> Dict[str, Any]:
-        system_message = f"""You are a helpful assistant that can use tools to complete tasks.
-    You keep working on a task until either you have a question or clarification for the user, or the success criteria is met.
-    You have many tools to help you, including tools to browse the internet, navigating and retrieving web pages.
-    You have a tool to run python code, but note that you would need to include a print() statement if you wanted to receive output.
-    The current date and time is {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+        system_message = f"""Eres un asistente útil que puede usar herramientas para completar tareas.
+    Continúas trabajando en una tarea hasta que tengas una pregunta o aclaración para el usuario, o hasta que se cumplan los criterios de éxito.
+    Tienes muchas herramientas para ayudarte, incluyendo herramientas para navegar por internet, navegar y recuperar páginas web.
+    Tienes una herramienta para ejecutar código python, pero ten en cuenta que necesitarías incluir un print() si quieres recibir salida.
+    La fecha y hora actual es {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 
-    This is the success criteria:
+    Estos son los criterios de éxito:
     {state['success_criteria']}
-    You should reply either with a question for the user about this assignment, or with your final response.
-    If you have a question for the user, you need to reply by clearly stating your question. An example might be:
+    Debes responder con una pregunta para el usuario sobre esta tarea o con tu respuesta final.
+    Si tienes una pregunta para el usuario, debes responderla claramente. Un ejemplo podría ser:
 
-    Question: please clarify whether you want a summary or a detailed answer
+    Pregunta: por favor, aclara si deseas un resumen o una respuesta detallada.
 
-    If you've finished, reply with the final answer, and don't ask a question; simply reply with the answer.
+    Si has terminado, responde con la respuesta final y no hagas ninguna pregunta; simplemente responde con la respuesta.
     """
         
         if state.get("feedback_on_work"):
             system_message += f"""
-    Previously you thought you completed the assignment, but your reply was rejected because the success criteria was not met.
-    Here is the feedback on why this was rejected:
+    Anteriormente creías que habías completado la tarea, pero tu respuesta fue rechazada porque no cumplía los criterios de éxito.
+    Aquí tienes la explicación del motivo del rechazo:
     {state['feedback_on_work']}
-    With this feedback, please continue the assignment, ensuring that you meet the success criteria or have a question for the user."""
+    Con esta información, continúa con la tarea y asegúrate de que cumples los criterios de éxito o si tienes alguna pregunta para el usuario."""
         
-        # Add in the system message
+        # Añadir el mensaje del sistema
 
         found_system_message = False
         messages = state["messages"]
@@ -87,10 +87,10 @@ class Sidekick:
         if not found_system_message:
             messages = [SystemMessage(content=system_message)] + messages
         
-        # Invoke the LLM with tools
+        # Invocar el LLM con herramientas
         response = self.worker_llm_with_tools.invoke(messages)
         
-        # Return updated state
+        # Retornar el estado actualizado
         return {
             "messages": [response],
         }
@@ -105,49 +105,49 @@ class Sidekick:
             return "evaluator"
         
     def format_conversation(self, messages: List[Any]) -> str:
-        conversation = "Conversation history:\n\n"
+        conversation = "Historial de la conversación:\n\n"
         for message in messages:
             if isinstance(message, HumanMessage):
-                conversation += f"User: {message.content}\n"
+                conversation += f"Usuario: {message.content}\n"
             elif isinstance(message, AIMessage):
-                text = message.content or "[Tools use]"
-                conversation += f"Assistant: {text}\n"
+                text = message.content or "[Herramienta usada]"
+                conversation += f"Asistente: {text}\n"
         return conversation
         
     def evaluator(self, state: State) -> State:
         last_response = state["messages"][-1].content
 
-        system_message = f"""You are an evaluator that determines if a task has been completed successfully by an Assistant.
-    Assess the Assistant's last response based on the given criteria. Respond with your feedback, and with your decision on whether the success criteria has been met,
-    and whether more input is needed from the user."""
+        system_message = f"""Eres un evaluador que determina si una tarea se ha completado correctamente por un asistente.
+    Evalúa la última respuesta del asistente según los criterios dados. Responde con tus comentarios y con tu decisión sobre si se han cumplido los criterios de éxito,
+    y si se necesita más input del usuario."""
         
-        user_message = f"""You are evaluating a conversation between the User and Assistant. You decide what action to take based on the last response from the Assistant.
+        user_message = f"""Estás evaluando una conversación entre el usuario y el asistente. Decides qué acción tomar según la última respuesta del asistente.
 
-    The entire conversation with the assistant, with the user's original request and all replies, is:
+    La conversación completa con el asistente, con la solicitud original del usuario y todas las respuestas, es:
     {self.format_conversation(state['messages'])}
 
-    The success criteria for this assignment is:
+    Los criterios de éxito para esta tarea son:
     {state['success_criteria']}
 
-    And the final response from the Assistant that you are evaluating is:
+    Y la respuesta final del asistente que estás evaluando es:
     {last_response}
 
-    Respond with your feedback, and decide if the success criteria is met by this response.
-    Also, decide if more user input is required, either because the assistant has a question, needs clarification, or seems to be stuck and unable to answer without help.
+    Responde con tus comentarios y decide si se han cumplido los criterios de éxito con esta respuesta.
+    Además, decide si se necesita más input del usuario, ya sea porque el asistente tiene una pregunta, necesita aclaración o parece estar bloqueado y no puede responder sin ayuda.
 
-    The Assistant has access to a tool to write files. If the Assistant says they have written a file, then you can assume they have done so.
-    Overall you should give the Assistant the benefit of the doubt if they say they've done something. But you should reject if you feel that more work should go into this.
+    El asistente tiene acceso a una herramienta para escribir archivos. Si el asistente dice que ha escrito un archivo, entonces puedes asumir que lo ha hecho.
+    En general, debes dar el beneficio de la duda al asistente si dice que ha hecho algo. Pero debes rechazar si crees que más trabajo debería ir en esto.
 
     """
         if state["feedback_on_work"]:
-            user_message += f"Also, note that in a prior attempt from the Assistant, you provided this feedback: {state['feedback_on_work']}\n"
-            user_message += "If you're seeing the Assistant repeating the same mistakes, then consider responding that user input is required."
+            user_message += f"Además, ten en cuenta que en un intento anterior del asistente, proporcionaste estos comentarios: {state['feedback_on_work']}\n"
+            user_message += "Si ves que el asistente está repitiendo los mismos errores, entonces considera responder que se necesita input del usuario."
         
         evaluator_messages = [SystemMessage(content=system_message), HumanMessage(content=user_message)]
 
         eval_result = self.evaluator_llm_with_output.invoke(evaluator_messages)
         new_state = {
-            "messages": [{"role": "assistant", "content": f"Evaluator Feedback on this answer: {eval_result.feedback}"}],
+            "messages": [{"role": "assistant", "content": f"Comentarios del evaluador sobre esta respuesta: {eval_result.feedback}"}],
             "feedback_on_work": eval_result.feedback,
             "success_criteria_met": eval_result.success_criteria_met,
             "user_input_needed": eval_result.user_input_needed
@@ -184,7 +184,7 @@ class Sidekick:
 
         state = {
             "messages": message,
-            "success_criteria": success_criteria or "The answer should be clear and accurate",
+            "success_criteria": success_criteria or "La respuesta debe ser clara y precisa",
             "feedback_on_work": None,
             "success_criteria_met": False,
             "user_input_needed": False
@@ -203,7 +203,7 @@ class Sidekick:
                 if self.playwright:
                     loop.create_task(self.playwright.stop())
             except RuntimeError:
-                # If no loop is running, do a direct run
+                # Si no hay bucle corriendo, ejecuta directamente
                 asyncio.run(self.browser.close())
                 if self.playwright:
                     asyncio.run(self.playwright.stop())

@@ -26,7 +26,7 @@ async def playwright_tools():
 
 
 def push(text: str):
-    """Send a push notification to the user"""
+    """Enviar una notificación push al usuario"""
     requests.post(pushover_url, data = {"token": pushover_token, "user": pushover_user, "message": text})
     return "success"
 
@@ -37,13 +37,13 @@ def get_file_tools():
 
 
 async def other_tools():
-    push_tool = Tool(name="send_push_notification", func=push, description="Use this tool when you want to send a push notification")
+    push_tool = Tool(name="send_push_notification", func=push, description="Usa esta herramienta cuando quieras enviar una notificación push")
     file_tools = get_file_tools()
 
     tool_search =Tool(
         name="search",
         func=serper.run,
-        description="Use this tool when you want to get the results of an online web search"
+        description="Usa esta herramienta cuando quieras obtener los resultados de una búsqueda en línea"
     )
 
     wikipedia = WikipediaAPIWrapper()

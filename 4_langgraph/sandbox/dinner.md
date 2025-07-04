@@ -1,24 +1,22 @@
-# Dinner Report: Le Bernardin
+# Informe del Restaurante Francés en Nueva York
 
-## Restaurant Overview
-- **Name**: Le Bernardin
-- **Address**: 155 W 51st St, New York, NY 10019
-- **Phone**: (212) 554-1515
-- **Website**: [le-bernardin.com](http://le-bernardin.com)
+## Restaurante: Le Bernardin
 
-## Cuisine
-Le Bernardin specializes in refined seafood dishes, crafted with the utmost respect for the ingredients. The menu includes a variety of seafood preparations, with an emphasis on freshness and simplicity.
+- **Dirección:** 155 West 51st Street, New York, New York 10019
+- **Teléfono:** +1 212-554-1515
 
-## Menu Highlights
-- **Tuna Tartare**: Diced raw tuna, served with toasted sesame and avocado.
-- **Wild Salmon**: Lightly cooked, served with a warm ginger-soy emulsion and bok choy.
-- **Poached Lobster**: Accompanied by truffle butter and a delicate sauce.
-- **Chocolate Soufflé**: A classic dessert, rich and airy.
+### Menú Destacado:
+- **Entradas:** Ensaladas de mariscos, Tartar de atún, Crudo de pescados.
+- **Platos principales:** Sashimi de atún, Lubina a la plancha, Pescado del día.
+- **Postres:** Tarta de chocolate, Mousse de frutas, Sorbete.
+- **Menú de degustación:** Desde $250, incluye múltiples cursos para disfrutar de la variedad de platos.  
 
-## Ambiance
-The atmosphere at Le Bernardin is elegant and serene, characterized by minimalist decor and a focus on the dining experience.
+### Reseñas:
+- **Calificaciones:** Le Bernardin ha sido galardonado con 3 estrellas Michelin y ha recibido el reconocimiento de Zagat y The New York Times. 
+- **Opiniones de clientes:**  
+  - "La comida, el servicio y el ambiente son simplemente deslumbrantes; una experiencia culinaria excepcional."
+  - "Un lugar icónico para disfrutar de mariscos frescos preparados de manera simple pero deliciosa, es un favorito en la alta cocina de Nueva York."
+  - "El menú de degustación es una obra maestra que ofrece una excelente relación calidad-precio para la calidad de la comida."
 
-## Summary of Reviews
-Le Bernardin has consistently received rave reviews for its exceptional cuisine and impeccable service. It is a three-Michelin star restaurant, recognized as one of the best seafood restaurants not only in New York but also in the world. Diners emphasize the harmonious flavors and the artistry of the dishes, making it a top choice for special occasions.
-
-**In conclusion**, Le Bernardin represents the pinnacle of fine dining, offering diners an unforgettable experience centered around seafood excellence.
+### Resumen:
+Le Bernardin es reconocido por su enfoque en mariscos frescos y platos bien elaborados que resaltan la calidad de los ingredientes. Situado en Midtown Manhattan, ha sido un referente en la escena gastronómica de Nueva York durante más de 30 años. Los críticos y clientes coincide en que es una experiencia culinaria que vale la pena, brindando una perfecta mezcla de elegancia, sabor y servicio excepcional.

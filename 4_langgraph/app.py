@@ -17,28 +17,28 @@ async def reset():
     return "", "", None, new_sidekick
 
 def free_resources(sidekick):
-    print("Cleaning up")
+    print("Limpiando recursos")
     try:
         if sidekick:
             sidekick.free_resources()
     except Exception as e:
-        print(f"Exception during cleanup: {e}")
+        print(f"Excepción durante la limpieza: {e}")
 
 
 with gr.Blocks(title="Sidekick", theme=gr.themes.Default(primary_hue="emerald")) as ui:
-    gr.Markdown("## Sidekick Personal Co-Worker")
+    gr.Markdown("## Sidekick Compañero de Trabajo Personal")
     sidekick = gr.State(delete_callback=free_resources)
     
     with gr.Row():
         chatbot = gr.Chatbot(label="Sidekick", height=300, type="messages")
     with gr.Group():
         with gr.Row():
-            message = gr.Textbox(show_label=False, placeholder="Your request to the Sidekick")
+            message = gr.Textbox(show_label=False, placeholder="Tu solicitud al Sidekick")
         with gr.Row():
-            success_criteria = gr.Textbox(show_label=False, placeholder="What are your success critiera?")
+            success_criteria = gr.Textbox(show_label=False, placeholder="¿Cuáles son tus criterios de éxito?")
     with gr.Row():
-        reset_button = gr.Button("Reset", variant="stop")
-        go_button = gr.Button("Go!", variant="primary")
+        reset_button = gr.Button("Reiniciar", variant="stop")
+        go_button = gr.Button("Ir!", variant="primary")
         
     ui.load(setup, [], [sidekick])
     message.submit(process_message, [sidekick, message, success_criteria, chatbot], [chatbot, sidekick])
