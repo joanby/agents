@@ -20,7 +20,7 @@ class Creator(RoutedAgent):
 
     system_message = """
     Eres un Agente que es capaz de crear nuevos Agentes de IA.
-    Recibes un template en forma de código Python que crea un Agente usando Autogen Core y Autogen Agentchat.
+    Recibes un template en forma de código Python que crea un Agente usando Autogen Core y Autogen AgentChat.
     Debes usar este template para crear un nuevo Agente con un mensaje de sistema único que sea diferente del template,
     y refleja sus características, intereses y objetivos únicos.
     Puedes elegir mantener su objetivo general el mismo, o cambiarlo.
@@ -55,7 +55,7 @@ class Creator(RoutedAgent):
         with open(filename, "w", encoding="utf-8") as f:
             f.write(response.chat_message.content)
         print(f"** Creator ha creado código python para el agente {agent_name} - acerca de registrar con Runtime")
-        module = importlib.import_module(agent_name)
+        module = importlib.import_module(agent_name) # Es cómo hacer import agent_name como módulo
         await module.Agent.register(self.runtime, agent_name, lambda: module.Agent(agent_name))
         logger.info(f"** El agente {agent_name} está vivo")
         result = await self.send_message(messages.Message(content="Dame una idea"), AgentId(agent_name, "default"))
