@@ -54,7 +54,7 @@ class Trader:
         return fig
 
     def get_holdings_df(self) -> pd.DataFrame:
-        """Convert holdings to DataFrame for display"""
+        """Convierte las tenencias a un DataFrame para mostrar"""
         holdings = self.account.get_holdings()
         if not holdings:
             return pd.DataFrame(columns=["Symbol", "Quantity"])
@@ -65,7 +65,7 @@ class Trader:
         return df
 
     def get_transactions_df(self) -> pd.DataFrame:
-        """Convert transactions to DataFrame for display"""
+        """Convierte las transacciones a un DataFrame para mostrar"""
         transactions = self.account.list_transactions()
         if not transactions:
             return pd.DataFrame(columns=["Timestamp", "Symbol", "Quantity", "Price", "Rationale"])
@@ -73,7 +73,7 @@ class Trader:
         return pd.DataFrame(transactions)
 
     def get_portfolio_value(self) -> str:
-        """Calculate total portfolio value based on current prices"""
+        """Calcula el valor total del portafolio basado en los precios actuales"""
         portfolio_value = self.account.calculate_portfolio_value() or 0.0
         pnl = self.account.calculate_profit_loss(portfolio_value) or 0.0
         color = "green" if pnl >= 0 else "red"
@@ -167,7 +167,7 @@ class TraderView:
 
 # Main UI construction
 def create_ui():
-    """Create the main Gradio UI for the trading simulation"""
+    """Crea la interfaz principal de Gradio para la simulación de trading"""
 
     traders = [
         Trader(trader_name, lastname, model_name)

@@ -15,16 +15,16 @@ mcp = FastMCP("push_server")
 
 
 class PushModelArgs(BaseModel):
-    message: str = Field(description="A brief message to push")
+    message: str = Field(description="Un breve mensaje para enviar una push")
 
 
 @mcp.tool()
 def push(args: PushModelArgs):
-    """Send a push notification with this brief message"""
+    """Envía una notificación push con este breve mensaje"""
     print(f"Push: {args.message}")
     payload = {"user": pushover_user, "token": pushover_token, "message": args.message}
     requests.post(pushover_url, data=payload)
-    return "Push notification sent"
+    return "Notification push enviada"
 
 
 if __name__ == "__main__":

@@ -22,7 +22,7 @@ if USE_MANY_MODELS:
     model_names = [
         "gpt-4.1-mini",
         "deepseek-chat",
-        "gemini-2.5-flash-preview-04-17",
+        "gemini-2.5-flash",
         "grok-3-mini-beta",
     ]
     short_model_names = ["GPT 4.1 Mini", "DeepSeek V3", "Gemini 2.5 Flash", "Grok 3 Mini"]
@@ -45,10 +45,10 @@ async def run_every_n_minutes():
         if RUN_EVEN_WHEN_MARKET_IS_CLOSED or is_market_open():
             await asyncio.gather(*[trader.run() for trader in traders])
         else:
-            print("Market is closed, skipping run")
+            print("El mercado está cerrado, no lo vamos a ejecutar.")
         await asyncio.sleep(RUN_EVERY_N_MINUTES * 60)
 
 
 if __name__ == "__main__":
-    print(f"Starting scheduler to run every {RUN_EVERY_N_MINUTES} minutes")
+    print(f"Iniciando el programador para ejecutarse cada {RUN_EVERY_N_MINUTES} minutos")
     asyncio.run(run_every_n_minutes())

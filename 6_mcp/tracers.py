@@ -7,8 +7,8 @@ ALPHANUM = string.ascii_lowercase + string.digits
 
 def make_trace_id(tag: str) -> str:
     """
-    Return a string of the form 'trace_<tag><random>',
-    where the total length after 'trace_' is 32 chars.
+    Devuelve una cadena de la forma 'trace_<tag><random>',
+    donde la longitud total después de 'trace_' es de 32 caracteres.
     """
     tag += "0"
     pad_len = 32 - len(tag)

@@ -22,7 +22,7 @@ class Transaction(BaseModel):
         return self.quantity * self.price
     
     def __repr__(self):
-        return f"{abs(self.quantity)} shares of {self.symbol} at {self.price} each."
+        return f"{abs(self.quantity)} acciones de {self.symbol} a {self.price} cada una."
 
 
 class Account(BaseModel):
@@ -61,97 +61,97 @@ class Account(BaseModel):
         self.save()
 
     def deposit(self, amount: float):
-        """ Deposit funds into the account. """
+        """ Depositar fondos en la cuenta. """
         if amount <= 0:
-            raise ValueError("Deposit amount must be positive.")
+            raise ValueError("El depósito debe ser un número positivo.")
         self.balance += amount
-        print(f"Deposited ${amount}. New balance: ${self.balance}")
+        print(f"Depositados ${amount}. Nuevo balance: ${self.balance}")
         self.save()
 
     def withdraw(self, amount: float):
-        """ Withdraw funds from the account, ensuring it doesn't go negative. """
+        """ Retirar fondos de la cuenta, asegurándose de que no queden en negativo. """
         if amount > self.balance:
-            raise ValueError("Insufficient funds for withdrawal.")
+            raise ValueError("No hay fondos suficientes para retirar.")
         self.balance -= amount
-        print(f"Withdrew ${amount}. New balance: ${self.balance}")
+        print(f"Reitrados ${amount}. Nuevo balance: ${self.balance}")
         self.save()
 
     def buy_shares(self, symbol: str, quantity: int, rationale: str) -> str:
-        """ Buy shares of a stock if sufficient funds are available. """
+        """ Comprar acciones de una empresa si hay fondos suficientes disponibles. """
         price = get_share_price(symbol)
         buy_price = price * (1 + SPREAD)
         total_cost = buy_price * quantity
         
         if total_cost > self.balance:
-            raise ValueError("Insufficient funds to buy shares.")
+            raise ValueError("Fondos insuficientes para comprar acciones.")
         elif price==0:
-            raise ValueError(f"Unrecognized symbol {symbol}")
+            raise ValueError(f"Símbolo no reconocido {symbol}")
         
-        # Update holdings
+        # Actualizar existencias
         self.holdings[symbol] = self.holdings.get(symbol, 0) + quantity
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        # Record transaction
+        # Registrar transacción
         transaction = Transaction(symbol=symbol, quantity=quantity, price=buy_price, timestamp=timestamp, rationale=rationale)
         self.transactions.append(transaction)
         
         # Update balance
         self.balance -= total_cost
         self.save()
-        write_log(self.name, "account", f"Bought {quantity} of {symbol}")
-        return "Completed. Latest details:\n" + self.report()
+        write_log(self.name, "account", f"Ha comprado {quantity} de {symbol}")
+        return "Completado. Últimos detalles:\n" + self.report()
 
     def sell_shares(self, symbol: str, quantity: int, rationale: str) -> str:
-        """ Sell shares of a stock if the user has enough shares. """
+        """ Vender acciones de una acción si el usuario tiene suficientes acciones.. """
         if self.holdings.get(symbol, 0) < quantity:
-            raise ValueError(f"Cannot sell {quantity} shares of {symbol}. Not enough shares held.")
+            raise ValueError(f"No pueden venderse {quantity} acciones de {symbol}. No hay suficientes acciones en posesión.")
         
         price = get_share_price(symbol)
         sell_price = price * (1 - SPREAD)
         total_proceeds = sell_price * quantity
         
-        # Update holdings
+        # Actualizar existencias
         self.holdings[symbol] -= quantity
         
-        # If shares are completely sold, remove from holdings
+        # Si las acciones se venden en su totalidad, retirarlas de las tenencias
         if self.holdings[symbol] == 0:
             del self.holdings[symbol]
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        # Record transaction
-        transaction = Transaction(symbol=symbol, quantity=-quantity, price=sell_price, timestamp=timestamp, rationale=rationale)  # negative quantity for sell
+        # Registrar transacción
+        transaction = Transaction(symbol=symbol, quantity=-quantity, price=sell_price, timestamp=timestamp, rationale=rationale)  # cantidad negativa para vender
         self.transactions.append(transaction)
 
-        # Update balance
+        # Actualizar el balance
         self.balance += total_proceeds
         self.save()
-        write_log(self.name, "account", f"Sold {quantity} of {symbol}")
-        return "Completed. Latest details:\n" + self.report()
+        write_log(self.name, "account", f"Vendidas {quantity} de {symbol}")
+        return "Completado. Últimos detalles:\n" + self.report()
 
     def calculate_portfolio_value(self):
-        """ Calculate the total value of the user's portfolio. """
+        """ Calcular el valor total de la cartera del usuario. """
         total_value = self.balance
         for symbol, quantity in self.holdings.items():
             total_value += get_share_price(symbol) * quantity
         return total_value
 
     def calculate_profit_loss(self, portfolio_value: float):
-        """ Calculate profit or loss from the initial spend. """
+        """ Calcular la ganancia o pérdida desde el gasto inicial. """
         initial_spend = sum(transaction.total() for transaction in self.transactions)
         return portfolio_value - initial_spend - self.balance
 
     def get_holdings(self):
-        """ Report the current holdings of the user. """
+        """ Reportar las tenencias actuales del usuario. """
         return self.holdings
 
     def get_profit_loss(self):
-        """ Report the user's profit or loss at any point in time. """
+        """ Reportar la ganancia o pérdida del usuario en cualquier momento. """
         return self.calculate_profit_loss()
 
     def list_transactions(self):
-        """ List all transactions made by the user. """
+        """ Lista todas las transacciones hechas por el usuario. """
         return [transaction.model_dump() for transaction in self.transactions]
     
     def report(self) -> str:
-        """ Return a json string representing the account.  """
+        """ Devuelve un string de un json representando la cuenta.  """
         portfolio_value = self.calculate_portfolio_value()
         self.portfolio_value_time_series.append((datetime.now().strftime("%Y-%m-%d %H:%M:%S"), portfolio_value))
         self.save()
@@ -159,20 +159,20 @@ class Account(BaseModel):
         data = self.model_dump()
         data["total_portfolio_value"] = portfolio_value
         data["total_profit_loss"] = pnl
-        write_log(self.name, "account", f"Retrieved account details")
+        write_log(self.name, "account", f"Recuperados detalles de la cuenta")
         return json.dumps(data)
     
     def get_strategy(self) -> str:
-        """ Return the strategy of the account """
-        write_log(self.name, "account", f"Retrieved strategy")
+        """ Devuelve la estrategia de la cuenta """
+        write_log(self.name, "account", f"Estrategia recibida")
         return self.strategy
     
     def change_strategy(self, strategy: str) -> str:
-        """ At your discretion, if you choose to, call this to change your investment strategy for the future """
+        """ Si lo deseas, puedes llamar a este método para cambiar tu estrategia de inversión futura """
         self.strategy = strategy
         self.save()
-        write_log(self.name, "account", f"Changed strategy")
-        return "Changed strategy"
+        write_log(self.name, "account", f"Estrategia cambiada")
+        return "Estrategia cambiada"
 
 # Example of usage:
 if __name__ == "__main__":
@@ -180,7 +180,7 @@ if __name__ == "__main__":
     account.deposit(1000)
     account.buy_shares("AAPL", 5)
     account.sell_shares("AAPL", 2)
-    print(f"Current Holdings: {account.get_holdings()}")
-    print(f"Total Portfolio Value: {account.calculate_portfolio_value()}")
-    print(f"Profit/Loss: {account.get_profit_loss()}")
-    print(f"Transactions: {account.list_transactions()}")
+    print(f"Tenencias actuales: {account.get_holdings()}")
+    print(f"Valor total del Portfolio: {account.calculate_portfolio_value()}")
+    print(f"Ganancias/Pérdidas: {account.get_profit_loss()}")
+    print(f"Transacciones: {account.list_transactions()}")

@@ -5,10 +5,10 @@ mcp = FastMCP("market_server")
 
 @mcp.tool()
 async def lookup_share_price(symbol: str) -> float:
-    """This tool provides the current price of the given stock symbol.
+    """Esta herramienta proporciona el precio actual del símbolo de acción dado.
 
-    Args:
-        symbol: the symbol of the stock
+    Argumentos:
+        symbol: el símbolo de la acción
     """
     return get_share_price(symbol)
 
