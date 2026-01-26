@@ -1,0 +1,27 @@
+[project]
+name = "direttorio"
+version = "0.1.0"
+description = "Crew de agentes CrewAI para plan editorial, investigación SEO y artículos optimizados para directorio/magazine"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[tools]==1.8.1",
+    "requests>=2.28",
+    "python-dotenv>=1.0",
+]
+
+[project.scripts]
+direttorio = "direttorio.main:run"
+run_crew = "direttorio.main:run"
+run_cli = "direttorio.main:_main"
+train = "direttorio.main:train"
+replay = "direttorio.main:replay"
+test = "direttorio.main:test"
+run_with_trigger = "direttorio.main:run_with_trigger"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"

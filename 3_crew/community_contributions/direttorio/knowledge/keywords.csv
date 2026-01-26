@@ -1,0 +1,13 @@
+keyword,volume,cpc,competition
+ejemplo keyword 1,3200,0.5,medium
+ejemplo keyword 2,1100,0.3,low
+ejemplo keyword 3,2900,0.45,medium
+keyword principal,880,0.4,low
+keyword secundario,590,0.35,low
+keyword relacionado 1,2100,0.6,high
+keyword relacionado 2,1800,0.55,medium
+keyword local 1,420,0.3,low
+keyword local 2,380,0.28,low
+keyword local 3,310,0.25,low
+guía ejemplo,2400,0.5,medium
+tutorial ejemplo,1900,0.4,medium

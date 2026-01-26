@@ -1,0 +1,11 @@
+tarea_calendario_editorial:
+  description: >
+    Crea un plan editorial de {num_days} días (entre 15 y 20) para el magazine.
+    Usa {directory_context}. Cada día puede tener un artículo (tema + breve) o "descanso".
+    Ejemplo: Día 1 artículo, Día 2 descanso, Día 3 artículo, etc. Distribución
+    flexible. Año actual: {current_year}.
+  expected_output: >
+    Plan editorial en markdown. Para cada día: "Día N — fecha", "Tema" (o "Descanso"),
+    "Breve" (si artículo), "Estado: por hacer". Estructura clara y fácil de actualizar.
+  agent: especialista_calendario_editorial
+  output_file: output/calendario_editorial.md

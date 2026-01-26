@@ -1,0 +1,110 @@
+tarea_plan_estrategico:
+  description: >
+    Usando {directory_context} y el tema "{topic}", crea un plan estratégico de contenido para el artículo.
+    Define tono, audiencia objetivo, secciones principales a cubrir y notas para el copywriter.
+    Año actual: {current_year}.
+  expected_output: >
+    Un plan estratégico en markdown: breve, tono, objetivo, secciones clave y consejos para el copywriter.
+  agent: planificador_estrategico
+  output_file: output/plan_estrategico.md
+
+tarea_investigacion_keywords:
+  description: >
+    Investiga keywords SEO para el tema "{topic}" usando la herramienta de investigación de keywords.
+    Usa el plan estratégico de la tarea anterior. Entrega un conjunto estructurado de keywords
+    (keyword, volumen, CPC, competencia) para el copywriter y editor SEO.
+  expected_output: >
+    Un resumen en markdown de keywords con métricas, listo para el copywriter y editor SEO.
+  agent: investigador_keywords
+  context:
+    - tarea_plan_estrategico
+
+tarea_investigacion_contenido:
+  description: >
+    Investiga fuentes externas, tendencias y competidores para "{topic}".
+    Usa el plan estratégico y la investigación de keywords. Resume hallazgos para apoyar el artículo.
+  expected_output: >
+    Un resumen conciso de investigación (hechos clave, fuentes, ángulos) para el copywriter.
+  agent: investigador_contenido
+  context:
+    - tarea_plan_estrategico
+    - tarea_investigacion_keywords
+
+tarea_escribir_articulo:
+  description: >
+    Escribe el artículo del magazine como copywriter profesional. Usa plan estratégico,
+    conjunto de keywords, investigación y {directory_context}. Tono profesional y elegante.
+    Título, meta description, H1, H2/H3, cuerpo (mínimo 800-1200 palabras para SEO), CTA final.
+    Sin enlaces internos en esta fase (los añadirá el especialista en enlaces).
+  expected_output: >
+    Artículo completo en markdown: título, meta, H1, H2/H3, cuerpo (800-1200+ palabras),
+    CTA. Calidad de magazine, optimizado para SEO y conversión. Sin enlaces internos.
+  agent: copywriter_profesional
+  context:
+    - tarea_plan_estrategico
+    - tarea_investigacion_keywords
+    - tarea_investigacion_contenido
+
+tarea_editar_seo:
+  description: >
+    Revisa el artículo para SEO. Verifica meta title (55-60 caracteres), meta description
+    (150-155), colocación de keywords en títulos y cuerpo, jerarquía H1–H2, longitud. Aplica las
+    correcciones y devuelve solo el artículo revisado, sin reporte.
+  expected_output: >
+    Artículo con correcciones SEO aplicadas. Solo markdown, sin reporte.
+  agent: editor_seo
+  context:
+    - tarea_escribir_articulo
+    - tarea_investigacion_keywords
+    - tarea_plan_estrategico
+
+tarea_especialista_enlaces:
+  description: >
+    Toma el artículo revisado y {directory_context}. Añade enlaces internos a
+    categorías, ciudades y perfiles de creadores donde sea pertinente. Usa URLs tipo /categorias/[slug],
+    /ciudades/[slug], /perfiles/[slug] (reemplaza [slug] con el slug de directory_context).
+    Anclas naturales.
+  expected_output: >
+    Artículo con enlaces internos añadidos. Solo markdown.
+  agent: especialista_enlaces
+  context:
+    - tarea_editar_seo
+
+tarea_correccion_calidad:
+  description: >
+    Corrige gramática, claridad y tono. Alíneate con {user_preference}.
+    Produce la versión final lista para publicación.
+  expected_output: >
+    Artículo final en markdown, listo para el magazine. Formateado y sin errores.
+  agent: corrector_calidad
+  context:
+    - tarea_especialista_enlaces
+  output_file: "output/articulo_dia_{day}.md"
+
+tarea_aprobacion_manager:
+  description: >
+    Evalúa el artículo final y da el visto bueno para publicación.
+    Criterios: calidad, SEO, tono, completitud, respeto de las guías.
+    Output obligatorio: primera línea "APROBADO" o "NO APROBADO", luego una breve
+    motivación (2-4 líneas). Nada más.
+  expected_output: >
+    Primera línea: APROBADO o NO APROBADO. Luego 2-4 líneas de motivación.
+  agent: manager
+  context:
+    - tarea_correccion_calidad
+  output_file: output/decision_manager.md
+
+tarea_actualizar_calendario:
+  description: >
+    Actualiza el plan editorial {editorial_calendar} para el Día {day}.
+    El artículo producido está en context (tarea_correccion_calidad), guardado como output/articulo_dia_{day}.md.
+    La decisión del manager está en context (tarea_aprobacion_manager). Marca el día como "hecho",
+    añade "Artículo: output/articulo_dia_{day}.md" y "Manager: APROBADO/NO APROBADO" con fecha.
+    Output: plan editorial completo actualizado, en markdown.
+  expected_output: >
+    Plan editorial completo actualizado (markdown), con el día indicado marcado como hecho.
+  agent: actualizador_calendario
+  context:
+    - tarea_aprobacion_manager
+    - tarea_correccion_calidad
+  output_file: output/calendario_editorial.md
