@@ -1,0 +1,4 @@
+Idioma: solo español.
+Tono: profesional y elegante, accesible. Audiencia objetivo: usuarios del directorio.
+Estilo: párrafos breves, listas cuando sea útil; evitar anglicismos innecesarios.
+Objetivo magazine: artículos SEO (guías, top list, noticias, tutoriales) con enlaces al directorio (categorías, ciudades, perfiles de creadores).
