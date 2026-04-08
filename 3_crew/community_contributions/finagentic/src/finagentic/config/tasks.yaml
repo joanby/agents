@@ -1,0 +1,23 @@
+research_financial_products_task:
+  description: >
+    Realizar una búsqueda exhaustiva y comparativa de los {financial_product} más competitivos en el mercado actual. 
+    Debes analizar tasas de interés, comisiones, plazos, requisitos de elegibilidad y cualquier letra pequeña relevante.
+    Asegúrate de obtener datos actualizados y comparables entre diferentes entidades financieras.
+  expected_output: >
+    Una lista detallada y comparativa de al menos 5 opciones de {financial_product}, incluyendo una tabla comparativa de sus características principales y pros/contras de cada una.
+  agent: financial_product_researcher
+
+analyze_and_report_task:
+  description: >
+    Analizar la información recopilada sobre los {financial_product} y determinar cuáles son las mejores opciones basándose en la optimización de beneficios y minimización de riesgos.
+    Redactar un informe profesional y ejecutivo que incluya:
+    1. Resumen ejecutivo.
+    2. Análisis detallado de las opciones seleccionadas.
+    3. Justificación técnica de por qué estas opciones son las mejores.
+    4. Recomendación final clara y accionable.
+  expected_output: >
+    Un informe profesional completo en formato Markdown, redactado con un tono ejecutivo pero que sea accesible para personas no especializadas, listo para ser presentado a un cliente.
+  agent: financial_analyst
+  context:
+    - research_financial_products_task
+  output_file: informes/financial_product_report_with_search2.md
