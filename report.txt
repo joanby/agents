@@ -1,0 +1,83 @@
+Iniciando el diagnostico: 2026-06-30 17:36:48
+
+===== Información del Sistema =====
+Sistema Operativo: Windows
+Windows Release: 11
+Version de Windows: 10.0.26200
+Arquitectura: ('64bit', 'WindowsPE')
+Máquina: AMD64
+Procesador: AMD64 Family 25 Model 116 Stepping 1, AuthenticAMD
+Total RAM: 15.29 GB
+RAM Disponible: 1.53 GB
+ADVERTENCIA: Poca memoria RAM disponible: 1.53 GB
+Espacio de disco libre: 58.18 GB
+
+===== Información del sistema de archivos =====
+Current Directory: C:\Users\solan\projects\agents
+Permisos de Escritura: OK
+
+Archivos en el directorio Padre:
+ - agents
+
+===== Información del Repositorio Git =====
+Raíz del repositorio Git: C:/Users/solan/projects/agents
+Commit Actual: 467a1fc638b8ce5632f25e38ab68bc2a6bc40221
+Origen Remoto: https://github.com/joanby/agents.git
+
+===== Environment File Check =====
+.env file exists at: C:/Users/solan/projects/agents\.env
+OPENAI_API_KEY found in .env file
+
+===== Virtualenv Check =====
+Virtualenv is active:
+Environment Path: C:\Users\solan\projects\agents\.venv
+Environment Name: .venv
+
+Python Environment:
+Python Version: 3.12.13 (main, Jun 23 2026, 15:23:43) [MSC v.1944 64 bit (AMD64)]
+Python Executable: C:\Users\solan\projects\agents\.venv\Scripts\python.exe
+
+Required Package Versions:
+openai: 1.82.1
+python-dotenv: 1.1.0
+requests: 2.32.3
+gradio: 5.31.0
+openai-agents: 0.0.16
+
+===== Network Connectivity Check =====
+SSL Version: OpenSSL 3.5.7 9 Jun 2026
+✓ Connected to https://www.google.com
+  Response time: 0.34s
+
+Performing bandwidth test using speedtest-cli...
+Download speed: 53.06 Mbps
+Upload speed: 92.26 Mbps
+
+===== Environment Variables Check =====
+
+PYTHONPATH is not set, as expected.
+
+Python sys.path:
+ - c:\Users\solan\projects\agents\setup
+ - C:\Users\solan\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\python312.zip
+ - C:\Users\solan\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\DLLs
+ - C:\Users\solan\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib
+ - C:\Users\solan\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none
+ - C:\Users\solan\projects\agents\.venv
+ - C:\Users\solan\projects\agents\.venv\Lib\site-packages
+ - C:\Users\solan\projects\agents\.venv\Lib\site-packages\win32
+ - C:\Users\solan\projects\agents\.venv\Lib\site-packages\win32\lib
+ - C:\Users\solan\projects\agents\.venv\Lib\site-packages\Pythonwin
+ - C:\Users\solan\projects\agents\.venv\Lib\site-packages\setuptools\_vendor
+OPENAI_API_KEY is set after calling load_dotenv()
+
+===== Additional Diagnostics =====
+Temp directory is writable: C:\Users\solan\AppData\Local\Temp
+
+===== Advertencias encontradas =====
+Se detectaron las siguientes advertencias. Es posible que no impidan la ejecución del programa, pero podrían causar un comportamiento inesperado:
+- Poca memoria RAM disponible: 1.53 GB
+
+
+ Hemos completado el diagnóstico a las 2026-06-30 17:37:15
+
